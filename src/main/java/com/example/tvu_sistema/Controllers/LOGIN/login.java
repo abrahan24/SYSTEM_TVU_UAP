@@ -29,13 +29,25 @@ public class login {
         return "login/loginA";
     }
 
-    @RequestMapping(value = "admin/BienvenidoV", method = RequestMethod.GET) // Pagina principal
+    @RequestMapping(value = "/admin/BienvenidoV", method = RequestMethod.GET) // Pagina principal
     public String BienvenidoV(HttpServletRequest request,RedirectAttributes flash,@RequestParam(name="mensaje",required = false)String mensaje, Model model) {
 
         if (request.getSession().getAttribute("persona") != null) {
 
 
-            return "/login/bienvenidoV";
+            return "login/bienvenidoV";
+        }else{
+            return "redirect:/LoginV";
+        }
+    }
+
+    @RequestMapping(value = "/admin/inicio", method = RequestMethod.GET) // Pagina principal
+    public String Bienvenido(HttpServletRequest request,RedirectAttributes flash,@RequestParam(name="mensaje",required = false)String mensaje, Model model) {
+
+        if (request.getSession().getAttribute("usuario") != null) {
+
+
+            return "login/bienvenidoV";
         }else{
             return "redirect:/LoginV";
         }

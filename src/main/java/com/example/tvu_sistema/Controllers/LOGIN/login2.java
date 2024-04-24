@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.tvu_sistema.Models.Entity.Usuario;
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
 
-@RestController
+@Controller
 public class login2 {
      @Autowired
 	private IUsuarioService usuarioService;
@@ -32,22 +33,19 @@ public class login2 {
 			if (usuario.getEst_usuario().equals("C")) {
 				return "redirect:/cerrar_sesionAdm";
 			}
-			HttpSession sessionAdministrador = request.getSession(true);
+			HttpSession sessionAdministrador = request.getSession(false);
 			
-
-			
-			
+			sessionAdministrador = request.getSession(true);
 			sessionAdministrador.setAttribute("usuario", usuario);
 			sessionAdministrador.setAttribute("persona", usuario.getPersona());
 
 			flash.addAttribute("success", usuario.getPersona().getNombre());
 
 			
+			return "redirect:/admin/inicio";
 			
-			return "redirect:/LoginV";
-
 		} else {
-			return "redirect:/admin/BienvenidoV";
+			return "redirect:/LoginV";
 		}
 
 	}
