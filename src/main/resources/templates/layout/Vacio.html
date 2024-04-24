@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layoutMain :: head"></head>
+
+<body>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="wrapper nav-collapsed menu-collapsed">
+    <div th:replace="layout/layoutMain :: menuLateral"></div>
+    <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+    <div class="main-panel">
+      <div class="main-content">
+        <div class="content-wrapper">
+          <div class="container-fluid"><!-- Basic form layout section start -->
+            <section id="basic-form-layouts">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2 class="content-header">Reg. Persona</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title-wrap bar-success">
+                        <h4 class="card-title" id="basic-layout-form">Registro Nuevo</h4>
+                      </div>
+                      <p class="mb-0">El registro corresponde a los datos personales del personal de trabajo (Presentadores, Reporteros, etc...)</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="px-3">
+                        <form class="form" novalidate>
+
+                          <h4 class="form-section">
+                            <i class="icon-user"></i> Datos Personales</h4>
+                          <div class="row">
+                            <div class="col-lg-4 col-md-12">
+                              <div class="form-group">
+                                <h5>Nombre</h5>
+                                <div class="controls">
+                                    <input type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
+                                </div>                      
+                              </div>
+                            </div>
+                          </div>
+                          
+
+                          <h4 class="form-section">
+                            <i class="icon-direction"></i>Datos de Ubicacion del Lugar Donde Vive
+                          </h4>
+                          <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                              <div class="form-group">
+                                <h5>Zona</h5>
+                                <div class="controls">
+                                    <input type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
+                                </div>                      
+                              </div>
+                            </div>
+                          </div>
+                            
+
+                          <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                              <button type="button" class="btn btn-success">
+                                <i class="icon-note"></i> Guardar
+                              </button>
+                              <button type="button" class="btn btn-danger mr-1">
+                                <i class="icon-trash"></i> Borrar todo
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- // Basic form layout section end -->
+          </div>
+        </div>
+      </div>
+
+      <div th:replace="layout/layoutMain :: footer"></div>
+
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  
+  <div th:replace="layout/layoutMain :: scrip1"></div>
+</body>
+
+</html>

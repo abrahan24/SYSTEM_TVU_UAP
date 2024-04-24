@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
+        <thead id="table_body">
+          <tr>
+            <th scope="col" >N°</th>
+            <th scope="col">Tema</th>
+            <th scope="col">Entrevistados</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Programa</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Reportero</th>
+            <th scope="col">Lugar</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Video</th>
+            <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="repor, index : ${reportajes}">
+            <td scope="row">
+              <b th:text="${index.index + 1}"  ></b>
+            </td>
+            <td th:text="${repor.tema_reportaje}" ></td>
+            <td>
+              <button style="width: 100%;" th:id="${repor.id_reportaje}" onclick="MandarId2(this.id)" type="button" class="btn btn-secondary btn-round mb-0" data-toggle="modal">
+                <b>Ver</b>
+              </button>
+            </td>
+            <td>
+              <button style="width: 100%;" th:id="${repor.id_reportaje}" onclick="MandarId(this.id)" type="button" class="btn btn-secondary btn-round mb-0" data-toggle="modal">
+                <b>Ver</b>
+              </button>
+            </td>
+            <td th:text="${repor.programa.desc_programa}" ></td>
+            <td th:text="${repor.categoria_reportaje.desc_categoria_reportaje}" ></td>
+            <td th:text="${repor.persona.nombre+' '+repor.persona.ap_paterno+' '+repor.persona.ap_materno}" ></td>
+            <td th:text="${repor.lugar_reportaje}" ></td>
+            <td th:text = "${#dates.format(repor.f_reportaje, 'dd/MM/yyyy')}" ></td>
+            <td>
+              <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" target="_blank" th:href="${repor.url_video_reportaje}">
+                <b>Ver</b>
+              </a>
+            </td>
+
+            <td>
+              <div class="btn-group btn-group-justified btn-round">
+                <a th:href="${'/admin/editar-reportaje/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
+                <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</body>
+</html>

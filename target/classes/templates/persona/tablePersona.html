@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tablePersona" class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
+        <thead id="table_body">
+          <tr>
+            <th scope="col" >N°</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ap_paterno</th>
+            <th scope="col">Ap_materno</th>
+            <th scope="col">C.I.</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Genero</th>
+            <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="per, index : ${personas}">
+            <td scope="row">
+              <b th:text="${index.index + 1}"  ></b>
+            </td>
+            <td th:text="${per.nombre}" ></td>
+            <td th:text="${per.ap_paterno}" ></td>
+            <td th:text="${per.ap_materno}" ></td>
+            <td th:text="${per.ci}" ></td>
+            <td th:text="${per.edad}" ></td>
+            <td th:text="${per.num_celular}" ></td>
+            <td th:text="${per.genero.abreviatura_genero}" ></td>
+            <td>
+                <div class="btn-group btn-group-justified btn-round">
+                  <a th:href="${'/admin/editar-persona/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
+                  <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
+                </div>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+</body>
+</html>

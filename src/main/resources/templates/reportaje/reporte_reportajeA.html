@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layoutMain :: head"></head>
+
+<body>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="wrapper nav-collapsed menu-collapsed">
+        <div th:replace="layout/layoutMain :: menuLateral"></div>
+        <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+        <div class="main-panel">
+            <div class="main-content">
+                <div class="content-wrapper">
+                    <div class="container-fluid"><!-- Basic form layout section start -->
+                        <section id="basic-form-layouts">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title-wrap bar-success">
+                                                <h4 class="card-title" id="basic-layout-form">Reporte De actividades por
+                                                    fecha</h4>
+                                            </div>
+                                            <p class="mb-0">El reporte corresponde a los Registros de Prensa que se
+                                                realizaron entre un rango de fechas</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="px-3">
+                                                <form action="../../../../admin/Reporte_ReportajesF" method="post"
+                                                    class="form" novalidate>
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-12">
+                                                            <div class="form-group">
+                                                                <h5>Fecha empiezo</h5>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <span class="fa fa-calendar-o"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input name="f_registro_reportaje1" id="picker_from"
+                                                                        class="form-control datepicker" type="date"
+                                                                        required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-12">
+                                                            <div class="form-group">
+                                                                <h5>Fecha fin</h5>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <span class="fa fa-calendar-o"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input name="f_registro_reportaje2" id="picker_to"
+                                                                        class="form-control datepicker" type="date"
+                                                                        required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-12">
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-success">Generar Reportaje</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Personal</th>
+                                                                    <th>Cargo</th>
+                                                                    <th>Programa a Cargo</th>
+                                                                    <th>Horario</th>
+                                                                    <th>Fecha de registro</th>
+                                                                    <th>Tema del registro</th>
+                                                                    <th>Descripcion del registro</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="r : ${reporte}">
+                                                                    <td th:text="${r[0]}"></td>
+                                                                    <td th:text="${r[1]}"></td>
+                                                                    <td th:text="${r[2]}"></td>
+                                                                    <td th:text="${r[3]}"></td>
+                                                                    <td th:text="${r[4]}"></td>
+                                                                    <td th:text="${r[5]}"></td>
+                                                                    <td th:text="${r[6]}"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- // Basic form layout section end -->
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="layout/layoutMain :: footer"></div>
+
+        </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+
+    <div th:replace="layout/layoutMain :: scrip1"></div>
+</body>
+
+</html>

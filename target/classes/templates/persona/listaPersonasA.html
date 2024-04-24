@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layoutMain :: head"></head>
+
+<body style="background-color: #343a40;">
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="wrapper nav-collapsed menu-collapsed">
+    <div th:replace="layout/layoutMain :: menuLateral"></div>
+    <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+    <div class="main-panel">
+      <div class="main-content">
+        <div class="content-wrapper">
+          <div class="container-fluid"><!-- Basic form layout section start -->
+            <section id="basic-form-layouts">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title-wrap bar-success">
+                        <h5 class="card-title" id="basic-layout-form">Asignar Cargo a los Usuarios</h5>
+                      </div>
+                      <p class="mb-0">La lista corresponde a los usuarios que se registraron en el sistema</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="px-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Apellido Paterno</th>
+                                            <th>Apellido Materno</th>
+                                            <th>C.I.</th>
+                                            <!-- <th>Usuario</th> -->
+                                            <!-- <th>Contraseña</th> -->
+                                            <th>Asignar Cargo</th>
+                                            <th>Operaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="usua : ${usuarios}">
+                                            <td th:text="${usua.persona.nombre}" ></td>
+                                            <td th:text="${usua.persona.ap_paterno}" ></td>
+                                            <td th:text="${usua.persona.ap_materno}" ></td>
+                                            <td th:text="${usua.persona.ci}" ></td>
+                                            <!-- <td th:text="${usua.nom_usuario}" ></td> -->
+                                            <!-- <td th:text="${usua.contrasena}" ></td> -->
+                                            <th:block th:if="${usua.cargo == null}">
+                                                <td>
+                                                    <button style="width: 100%;" class="btn btn-info" data-toggle="modal"  th:attr="data-target='#modal1'+${usua.id_usuario}">Asignar Cargo</button>    
+                                                </td>
+                                            </th:block>
+                                            <th:block th:if="${usua.cargo != null}">
+                                                <td>
+                                                    <button style="width: 100%;" class="btn btn-success" data-toggle="modal"  th:attr="data-target='#modal1'+${usua.id_usuario}" th:text="${usua.cargo.desc_cargo}"></button>    
+                                                </td>
+                                            </th:block>
+                                            <td>
+                                                <button class="btn btn-warning"><i class="fa fa-cog"></i></button>
+                                                <a class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- // Basic form layout section end -->
+            <th:block  th:each ="usu : ${usuarios}" th:if="${usu.est_usuario != 'X'}">
+                <div class="modal fade text-left" th:id="${'modal1'+usu.id_usuario}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>Asignar Cargo</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                
+                            <div class="modal-body">
+                                <form th:action="${'../../../../admin/EditarUsuario/'+usu.id_usuario}" method="post">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <select style="width: 100%;" name="Id_cargo" id="select1" required class="selectB form-control">
+                                                <th:block th:each="car : ${cargos}">
+                                                  <option th:value="${car.id_cargo}" th:text="${car.desc_cargo}"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                    </div>  
+                                <div class="modal-footer text-center">
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cerrar ventana</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+          </div>
+        </div>
+      </div>
+
+      <div th:replace="layout/layoutMain :: footer"></div>
+
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  
+  <div th:replace="layout/layoutMain :: scrip1"></div>
+  <script>
+    $(document).ready(function() {
+    $('.selectB').select2();
+    $('.selectB_1').select2();
+    $('.selectM').select2();
+    $('.selectM_2').select2();
+    });
+</script>
+
+</body>
+
+</html>

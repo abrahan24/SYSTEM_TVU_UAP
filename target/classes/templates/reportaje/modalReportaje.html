@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <th:block th:fragment="modalContent">
+
+
+    <div class="modal-header" style="background-color: #FF4961;">
+      <h4 class="modal-title text-white" id="myModalLabel1" th:text="${reportaje.tema_reportaje}"></h4>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <div class="modal-body" style="background-color: #003566;">
+      <h5 class="text-white"><b>Descripcion del Reportaje</b></h5>
+
+      <textarea placeholder="- Nombres de los Entrevistados." cols="30" rows="10"
+        th:field="${reportaje.desc_reportaje}" type="text" name="text" class="form-control" disabled></textarea>
+
+      <div class="modal-footer">
+        <button style="width: 100%;" type="button" class="btn btn-danger" data-bs-dismiss="modal"><b>Cerrar</b></button>
+      </div>
+    </div>
+
+  </th:block>
+
+  <th:block th:fragment="modalContent2">
+
+
+    <div class="modal-header" style="background-color: #FF4961;">
+      <h4 class="modal-title text-white" id="myModalLabel1" th:text="${reportaje.tema_reportaje}"></h4>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body" style="background-color: #003566;">
+      <h5 class="text-white"><b>Entrevistados del Reportaje</b></h5>
+      <textarea placeholder="- Nombres de los Entrevistados." cols="30" rows="5"
+        th:field="${reportaje.invitados_reportaje}" type="text" name="text" class="form-control" disabled></textarea>
+
+      <div class="modal-footer">
+        <button style="width: 100%;" type="button" class="btn btn-danger" data-bs-dismiss="modal"><b>Cerrar</b></button>
+      </div>
+    </div>
+
+  </th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layoutMain :: head"></head>
+
+<body style="background-color: #dee2e6;">
+
+  <div class="loader-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="wrapper">
+    <div th:replace="layout/layoutMain :: menuLateral"></div>
+    <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+    <div class="main-panel">
+      <div class="main-content">
+        <div class="content-wrapper">
+          <div class="container-fluid"><!-- Basic form layout section start -->
+            <section id="basic-form-layouts">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card box-shadow-3">
+                    <div class="card-header">
+                      <div class="card-title-wrap bar-success">
+                        <h4 th:if="${reportaje.id_reportaje == null}" class="card-title" id="basic-layout-form">Nuevo Registro - Reportaje</h4>
+                        <h4 th:if="${reportaje.id_reportaje != null}" class="card-title" id="basic-layout-form">Actualizar Registro - Reportaje</h4>
+                      </div>
+                      <p class="mb-0">El registro corresponde a la información detallada del reportaje realizado</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="px-3">
+
+                        <th:block th:if="${reportaje.id_reportaje == null}" >
+                          <form id="form1" action="/RegistroReportajeF" class="form" method="post" novalidate>
+                        </th:block>
+                        <th:block th:if="${reportaje.id_reportaje != null}" >
+                          <form action="/admin/RegistroReportaje2F" class="form" method="post" novalidate>
+                        </th:block>
+
+                            <input type="hidden" th:field="${reportaje.id_reportaje}">
+                            <div class="row">
+
+                                <div class="col-lg-8 col-md-12">
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <h4 class="form-section"><i class="icon-notebook"></i> Datos Principales</h4>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="form-group">
+                                          <label>Tema del Reportaje</label>
+                                          <div class="controls">
+                                              <input th:field="${reportaje.tema_reportaje}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
+                                          </div>                      
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="form-group">
+                                          <label>Descripción del Reportaje</label>
+                                          <div class="controls">
+                                              <textarea cols="25" rows="8" th:field="${reportaje.desc_reportaje}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos"></textarea>
+                                          </div>                      
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="form-group">
+                                          <label>Nombres de los Entrevistados</label>
+                                          <button type="button" class="badge badge-pill badge-dark" data-toggle="popover" 
+                                            data-content="<b>Seguir la Redacción</b> <hr> <b> Ejemplo </b> <br> - Nombre del 1er Entrevistado.   <br>  - Nombre del 2do Entrevistado  <br>  - Nombre del 3er Entrevistado" data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                                            ❔
+                                          </button>
+                                          <div class="controls">
+                                            <textarea placeholder="- Nombres de los Entrevistados." cols="30" rows="4" th:field="${reportaje.invitados_reportaje}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos"></textarea>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12">
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <h4 class="form-section"><i class="icon-book-open"></i> Detalles de Reportaje</h4>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>Del Programa:</label>
+                                        <button type="button" class="badge badge-pill badge-dark" data-toggle="popover" th:data-content="${'<b> Los Programas que se muestran son de la Gestión actual ' + ano_actual +'</b>'}" data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                                          ❔
+                                        </button>
+                                        <div class="controls">
+                                          <select style="width: 100%;" th:field="${reportaje.programa}" required class="selectB_3 form-control">
+                                            <th:block th:each="pro : ${programas}" th:if="${pro.est_programa == 'A' && pro.ano_programa == ano_actual}">
+                                              <option th:value="${pro.id_programa}" th:text="${pro.desc_programa}"></option>
+                                            </th:block>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>Lugar del Reportaje</label>
+                                        <div class="controls">
+                                            <input th:field="${reportaje.lugar_reportaje}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
+                                        </div>                      
+                                    </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>Fecha del Reportaje</label>
+                                        <div class="input-group">
+                                          <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                              <span class="fa fa-calendar-o"></span>
+                                            </span>
+                                          </div>
+                                          <input th:if="${reportaje.id_reportaje != null}" name="f_reportajee" th:value="${#dates.format(reportaje.f_reportaje, 'yyyy-MM-dd')}" class="form-control" type="date" required>
+                                          <input th:if="${reportaje.id_reportaje == null}"  name="f_reportajee" class="form-control" type="date" required>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>Categoria del Reportaje</label>
+                                        <div class="controls">
+                                            <select style="width: 100%;" th:field="${reportaje.categoria_reportaje}" id="select1" required class="selectB form-control">
+                                              <th:block th:each="cr : ${categoria_reportajes}">
+                                                <option th:value="${cr.id_categoria_reportaje}" th:text="${cr.desc_categoria_reportaje}"></option>
+                                              </th:block>
+                                            </select>
+                                        </div>                     
+                                    </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>Reportero</label>
+                                        <div class="controls">
+                                            <select style="width: 100%;" th:field="${reportaje.persona}" required class="selectB_2 form-control">
+                                              <th:block th:each="p : ${personas}" th:if="${p.estado_persona == 'A'}">
+                                                <option th:value="${p.id_persona}" th:text="${p.nombre+' '+p.ap_paterno+' '+p.ap_materno}"></option>
+                                              </th:block>
+                                            </select>
+                                        </div>                     
+                                    </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="form-group">
+                                        <label>URL del video</label>
+                                        <button type="button" class="badge badge-pill badge-dark" data-toggle="popover" data-content="<b>Las URLs deben contener <br> 'http://' o 'https://'</b> <hr> <b> Ejemplo Url facebook. </b> <h6> https://fb.watch/mBUDI6FsaC/ </h6> <b>Ejemplo Url Youtube.</b> <h6>https://www.youtube.com/watch?v=6e4zayYH-VQ </h6> " data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                                          ❔
+                                        </button>
+                                          <div class="controls">
+                                            <input placeholder="www.youtube.com/watch?v=JjKY_HNT5HM" th:field="${reportaje.url_video_reportaje}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
+                                          </div> 
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                            </div>
+                          <div class="row">
+                            <div class="col-lg-10 col-md-12">
+                              <button th:if="${reportaje.id_reportaje == null}" style="width: 100%;" type="submit" class="btn btn-success py-2">
+                                <b>GUARDAR</b>
+                              </button>
+                              <button th:if="${reportaje.id_reportaje != null}" style="width: 100%;" type="submit" class="btn btn-info py-2">
+                                <b>ACTUALIZAR INFORMACIÓN</b>
+                              </button>
+                            </div>
+                            <div class="col-lg-2 col-md-12">
+                              <a th:if="${reportaje.id_reportaje == null}" style="width: 100%;" href="#table_body" class="btn btn-warning py-2">
+                                <b>Ver Lista</b>
+                              </a>
+                              <a th:if="${reportaje.id_reportaje != null}" href="/admin/RegistroReportajeA" style="width: 100%;" type="submit" class="btn btn-danger py-2">
+                                <b>CANCELAR</b>
+                              </a>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- ========= -->
+            <!-- TABLA -->
+            <!-- ========= -->
+            <section id="basic-form-layouts">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card box-shadow-3">
+                    <div class="card-header">
+                      <div class="card-title-wrap bar-success">
+                        <h4 class="card-title" id="basic-layout-form">Lista de Registros</h4>
+                      </div>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="px-3" id="fragmentContainer">
+                        
+                        <th:block th:replace="reportaje/tableReportaje :: table"></th:block>
+                        
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- ========= -->
+            <!-- MODAL Descripcion-->
+            <!-- ========= -->
+            <div class="modal fade text-left" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content" id="modalContent">
+                </div>
+              </div>
+            </div>
+            <!-- ========= -->
+            <!-- MODAL2 Entrevistados -->
+            <!-- ========= -->
+            <div class="modal fade text-left" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content" id="modalContent2">
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+      <div th:replace="layout/layoutMain :: footer"></div>
+
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  
+  <div th:replace="layout/layoutMain :: scrip1"></div>
+
+  <div th:replace="layout/mensajes :: submit_form"></div>
+  <script>
+    $(document).ready(function() {
+    $('.selectB').select2();
+    $('.selectB_2').select2();
+    $('.selectB_3').select2();
+    $('.selectM').select2();    
+    });
+    function MandarId(param) {
+      
+      $.ajax({
+          url: '/admin/modalReportaje/'+param,
+          type: 'GET',
+          success: function(data) {
+              $("#modalContent").html(data);
+              $("#myModal").modal('show');
+          }
+      });
+      
+    };
+    function MandarId2(param) {
+      
+      $.ajax({
+          url: '/admin/modalReportaje2/'+param,
+          type: 'GET',
+          success: function(data) {
+              $("#modalContent2").html(data);
+              $("#myModal2").modal('show');
+          }
+      });
+      
+    };
+  </script>
+  <script>
+    function MandarURL(a) {
+        swal({
+            title: 'Eliminar Registro?',
+            type: 'error',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: '<a class="text-white" href="/admin/eliminar-reportaje/' + a + '" >Eliminar</a>',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText: 'Cancelar',
+            cancelButtonAriaLabel: 'Thumbs down',
+            confirmButtonClass: 'btn btn-primary',
+            buttonsStyling: false,
+            cancelButtonClass: 'btn btn-danger ml-1',
+        });
+    }
+    function loadFragment() {
+        $.ajax({
+            url: '/admin/tableReportaje', // The controller endpoint that returns the fragment
+            method: 'GET',
+            success: function (data) {
+                $('#fragmentContainer').html(data);
+                $('.scroll-horizontal').DataTable( {
+                    "scrollX": true
+                } );
+            },
+            error: function (error) {
+                console.log('Failed to load fragment:', error);
+            }
+        });
+    }
+    
+  </script>
+</body>
+
+</html>

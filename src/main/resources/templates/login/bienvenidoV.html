@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layoutMain :: head"></head>
+
+<body>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="wrapper">
+    <div th:replace="layout/layoutMain :: menuLateral"></div>
+    <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+    <div class="main-panel">
+      <div class="main-content">
+        <div class="content-wrapper">
+          <div class="container-fluid"><!-- Basic form layout section start -->
+            <section id="basic-form-layouts">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2 class="content-header">Bienvenido</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 th:text="${session.usuario.persona.nombre+' '+session.usuario.persona.ap_paterno+' '+session.usuario.persona.ap_materno}"></h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- // Basic form layout section end -->
+          </div>
+        </div>
+      </div>
+
+      <div th:replace="layout/layoutMain :: footer"></div>
+
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  
+  <div th:replace="layout/layoutMain :: scrip1"></div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tablePrograma" class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
+        <thead id="table_body">
+          <tr>
+            <th scope="col" >N°</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Horario</th>
+            <th scope="col">Personal</th>
+            <th scope="col">Dias</th>
+            <th scope="col">Hr.Comienzo</th>
+            <th scope="col">Hr.Fin</th>
+            <th scope="col">Gestion</th>
+            <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="prog, index : ${programas}">
+            <td scope="row">
+              <b th:text="${index.index + 1}"  ></b>
+            </td>
+            <td th:text="${prog.desc_programa}" ></td>
+            <td th:text="${prog.horario.desc_horario}" ></td>
+            <td th:text="${prog.persona.nombre+' '+prog.persona.ap_paterno+' '+prog.persona.ap_materno}" ></td>
+            <td>
+              <th:block th:each="tr : ${transmite}" th:if="${tr.programa.id_programa == prog.id_programa}">
+                <span style="width: 100%;" class="badge badge-dark mt-1" th:text="${tr.dias_transmision.desc_dias_transmision}" ></span> <br>
+              </th:block>
+            </td>
+            <td th:text="${prog.hr_empiezo_pograma}" ></td>
+            <td th:text="${prog.hr_fin_programa}" ></td>
+            <td th:text="${prog.ano_programa}" ></td>
+            <td>
+              <div class="btn-group btn-group-justified btn-round">
+                <a th:href="${'/admin/editar-programa/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
+                <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</body>
+</html>

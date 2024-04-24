@@ -1,0 +1,256 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE OR REPLACE FUNCTION public.validar_usuario(usuariou character varying, contrasenau character varying)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+declare
+    res Integer;
+begin
+	
+	if(select count(usuario.id_usuario) from usuario where usuario.nom_usuario  = usuarioU and usuario.contrasena = crypt(contrasenaU, contrasena)) <> 0
+	then
+	select usuario.id_usuario into res from usuario where usuario.nom_usuario  = usuarioU and usuario.contrasena = crypt(contrasenaU, contrasena);
+	return res;
+	else
+	res:= 0;
+	return res;
+	end if;
+END;
+$function$;
+
+select * from validar_usuario('ROOT', '123') 
+
+CREATE OR REPLACE FUNCTION public.validar_usuario3(usuariou character varying, contrasenau character varying, id_personau integer)
+ RETURNS Integer
+ LANGUAGE plpgsql
+AS $function$
+declare
+    respuesta Integer;
+begin
+	
+	if(select count(usuario.id_persona) from usuario where usuario.id_persona = id_personaU or usuario.usuario_nom  = usuarioU) = 0	
+	then
+	INSERT INTO public.usuario
+	(contrasena, estado, usuario_nom, id_persona)
+	VALUES(crypt(contrasenaU, gen_salt('bf')), 'A', usuarioU, id_personaU)
+	returning id_usuario into respuesta;
+	else
+	respuesta:= 2;
+	end if;
+
+ 	return respuesta;
+END;
+$function$;
+
+CREATE OR REPLACE FUNCTION public.insertar_personaUsuario(
+ ap2 character, 
+ ap1 character, 
+ cip character, 
+ edadp integer, 
+ nombrep character, 
+ num_celularp character, 
+id_generop integer , 
+ usuario_nomp character,
+ correop character,
+ contrasenap character
+)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    respuesta integer;
+   	id_per integer;
+begin
+	if(select count(persona.ci) from persona where persona.ci  = ciP) <> 0 or (select count(usuario.id_persona) from usuario where usuario.nom_usuario  = usuario_nomp) <> 0
+ 	then
+ 	respuesta := 0;
+ 	
+ 	end if;
+ 
+	if(select count(persona.ci) from persona where persona.ci  = ciP) = 0 and (select count(usuario.id_persona) from usuario where usuario.nom_usuario = usuario_nomp) = 0
+	then	
+	INSERT INTO public.persona
+	(ap_materno, ap_paterno, ci, edad, estado_persona, nombre, num_celular, id_genero)
+	VALUES(upper(ap2), upper(ap1), cip, edadp, 'A', upper(nombrep), num_celularp, id_generop)	
+	returning id_persona into id_per;
+
+	INSERT INTO public.usuario
+	(contrasena, correo, est_usuario, nom_usuario, id_persona)
+	VALUES(crypt(contrasenap, gen_salt('bf')), correop, 'A', usuario_nomp, id_per)
+
+	returning id_usuario into respuesta;
+	
+ 	end if;
+ 
+ 	return respuesta;
+ 
+END;
+$function$;
+
+CREATE OR REPLACE FUNCTION public.insertar_programa(desc_programap character varying, hr_empiezo_pogramap time without time zone, hr_fin_programap time without time zone, id_horariop integer, id_personap integer)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    res integer;
+begin
+	
+	if(select count(programa.id_programa) from programa where programa.desc_programa = desc_programap) = 0
+	then	
+	INSERT INTO public.programa
+	(desc_programa, est_programa, hr_empiezo_pograma, hr_fin_programa, id_horario, id_persona)
+	VALUES(upper(desc_programaP), 'A', hr_empiezo_pogramaP, hr_fin_programaP, id_horarioP, id_personaP)
+	returning id_programa into res;
+ 	else
+ 	res := 0;
+ 	end if;
+ 	return res;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION public.insertar_reportaje(
+tema_reportajer character,
+desc_reportajer character,
+lugar_reportajer character,
+f_reportajer timestamp,
+invitados_reportajer character,
+url_video_reportajer character,
+id_programar integer,
+id_personar integer,
+id_categoria_reportajer integer
+)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    res integer;
+begin
+	if(select count(reportaje.id_reportaje) from reportaje where reportaje.desc_reportaje = tema_reportajer) = 0
+	then
+	INSERT INTO public.reportaje
+	(desc_reportaje, est_reportaje, f_reportaje, invitados_reportaje, lugar_reportaje, tema_reportaje, id_programa, id_persona, id_categoria_reportaje, url_video_reportaje)
+	VALUES(upper(desc_reportajer), 'A', f_reportajer, upper(invitados_reportajer), upper(lugar_reportajer), upper(tema_reportajer), id_programar, id_personar, id_categoria_reportajer, url_video_reportajer)
+	returning id_reportaje into res;
+ 	else
+ 	res := 0;
+ 	end if;
+ 	return res;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION public.lista_programas()
+ RETURNS TABLE(
+ id_programa bigint,
+ desc_programa varchar(255),
+ hr_fin_programa time,
+ hr_empiezo_pograma time,
+ id_horario bigint,
+ id_persona bigint,
+ est_programa varchar(255)
+ )
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    return query
+
+    select 
+    programa.id_programa, 
+    programa.desc_programa, 
+    programa.hr_fin_programa, 
+    programa.hr_empiezo_pograma, 
+    programa.id_horario,
+    programa.id_persona,
+    programa.est_programa 
+    from programa 
+    where programa.est_programa = 'A';
+   
+    
+end;
+$function$;
+
+CREATE OR REPLACE FUNCTION public.lista_reportajes()
+ RETURNS TABLE(
+ id_reportaje bigint,
+ desc_reportaje varchar(255),
+ est_reportaje varchar(255),
+ f_reportaje timestamp,
+ invitados_reportaje varchar(255),
+ lugar_reportaje varchar(255),
+ tema_reportaje varchar(255),
+ url_video_reportaje varchar(255),
+ id_categoria_reportaje bigint,
+ id_persona bigint,
+ id_programa bigint
+ )
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    return query
+
+    select 
+    r.id_reportaje,
+    r.desc_reportaje, 
+    r.est_reportaje, 
+    r.f_reportaje, 
+    r.invitados_reportaje, 
+    r.lugar_reportaje, 
+    r.tema_reportaje,
+    r.url_video_reportaje,
+    r.id_categoria_reportaje, 
+    r.id_persona, 
+    r.id_programa
+    from reportaje r 
+    where r.est_reportaje = 'A';   
+    
+end;
+$function$;
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+INSERT INTO public.persona
+(ap_materno, ap_paterno, edad, estado_persona, nombre, num_celular, id_genero)
+VALUES('QUISPE', 'GARCIA', 23, 'A', 'CRISTIAN DIEGO', '71115098', 1);
+
+INSERT INTO public.genero
+(abreviatura_genero, desc_genero, estado_genero, icono_genero)
+VALUES('M', 'MASCULINO', 'A', 'male');
+
+INSERT INTO public.usuario
+	(contrasena, est_usuario, nom_usuario, id_persona)
+	VALUES(crypt('123',gen_salt('bf')), 'A', 'ROOT', 1)
+	
+INSERT INTO public.profesion
+(desc_profesion, estado_profesion)
+VALUES('Medicina', 'A');
+
+INSERT INTO public.horario
+(ano_horario, desc_horario, est_horario)
+VALUES('2023', 'TARDE', 'A');
+
+INSERT INTO public.dias_transmision
+(desc_dias_transmision, est_dias_transmision)
+VALUES('LUNES', 'A'),
+('MARTES', 'A'),
+('MIERCOLES', 'A'),
+('JUEVES', 'A'),
+('VIERNES', 'A'),
+('SABADO', 'A'),('DOMINGO', 'A')
+;
+
+INSERT INTO public.categoria_reportaje
+(desc_categoria_reportaje, est_categoria_reportaje)
+VALUES('CULTURAL', 'A');
+
+

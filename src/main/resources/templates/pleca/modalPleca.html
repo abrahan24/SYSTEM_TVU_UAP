@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <th:block th:fragment="modalContent">
+
+        <div class="modal-header" style="background-color: #FF4961;">
+        <h4 class="modal-title text-white" id="myModalLabel1" th:text="${pleca.tema_pleca}"></h4>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+
+        <div class="modal-body" style="background-color: #126ec4;">
+        <h5 class="text-white"><b>Presentadores</b></h5>
+
+        <th:block th:each="pers : ${pleca.personas}">
+
+        <a style="width: 100%;" class="btn btn-social btn-round btn-min-width mr-2 mb-2 py-2 btn-reddit">
+            <span class="icon icon-user"></span> <b th:text="${pers.nombre+' '+pers.ap_paterno+' '+pers.ap_materno}" ></b>
+        </a>
+            
+        </th:block>
+        
+
+        <div class="mt-2">
+            <button style="width: 100%;" type="button" class="btn btn-danger" data-bs-dismiss="modal"><b>Cerrar</b></button>
+        </div>
+
+        </div>
+
+    </th:block>
+
+    <th:block th:fragment="modalContent2">
+
+        <div class="modal-header" style="background-color: #FF4961;">
+        <h4 class="modal-title text-white" id="myModalLabel1" th:text="${pleca.tema_pleca}"></h4>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+
+        <div class="modal-body" style="background-color: #126ec4;">
+        <h5 class="text-white"><b>Invitados</b></h5>
+
+        
+        <textarea cols="40" rows="5" th:field="${pleca.invitados_pleca}" type="text" name="text" class="form-control" disabled></textarea>
+
+        <div class="mt-2">
+            <button style="width: 100%;" type="button" class="btn btn-danger" data-bs-dismiss="modal"><b>Cerrar</b></button>
+        </div>
+        
+        </div>
+
+    </th:block>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div th:fragment="mensaje1">
+        <th:block th:if="${mensaje!=null}">
+            <input id="mensajeOculto1" type="hidden" th:value="${mensaje}">
+            <script>
+                $(document).ready(function Mostrar() {
+                    var m = $("#mensajeOculto1").val();
+                    console.log(m);
+                    swal({
+                        title: m,
+                        type: 'success',
+
+                    }).then().done();
+                });
+            </script>
+        </th:block>
+    </div>
+
+    <div th:fragment="submit_form">
+        <script>
+            $(document).ready(function () {
+                $('#form1').submit(function (event) {
+                    event.preventDefault(); // Evita el envío del formulario por defecto
+
+                    var form = $(this);
+                    var submitBtn = form.find('button[type="submit"]'); // Encuentra el botón de envío del formulario
+                    submitBtn.prop('disabled', true); // Desactiva el botón
+
+                    var url = form.attr('action');
+                    var formData = form.serialize(); // Serializa los datos del formulario
+
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        success: function (data) {
+
+                            if (data != 0) {
+                                swal({
+                                title: "Registro Exitoso",
+                                type: 'success',
+
+                                }).then().done();
+                                loadFragment();    
+                            }else{
+                                swal({
+                                title: "Registro Fallido",
+                                type: 'error',
+
+                                }).then().done();    
+                            }                            
+                            submitBtn.prop('disabled', false); // Reactiva el botón después de recibir la respuesta
+                            form[0].reset(); // Limpia los datos del formulario
+                        },
+                        error: function () {
+                            submitBtn.prop('disabled', false); // Reactiva el botón en caso de error
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </div>
+
+
+</body>
+
+</html>
