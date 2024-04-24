@@ -31,16 +31,10 @@ public class UsuarioServiceImpl implements IUsuarioService{
         return usuarioDao.findById(id).orElse(null);
     }
 
+ 
     @Override
-    public Integer validar_usuario(String usuario, String contrasena) {
-        // TODO Auto-generated method stub
-        return usuarioDao.validar_usuario(usuario, contrasena);
-    }
-
-    @Override
-    public Long validar_usuario2(String usuario, String contrasena) {
-        // TODO Auto-generated method stub
-        return usuarioDao.validar_usuario2(usuario, contrasena);
+    public Usuario getUsuarioContraseña(String nom_usuario, String contrasena) {
+        return usuarioDao.getUsuarioContraseña(nom_usuario, contrasena);
     }
 
     

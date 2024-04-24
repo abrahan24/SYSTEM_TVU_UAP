@@ -49,7 +49,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-block pb-0">
-                                    <form id="form1" action="/LoginF" method="post">
+                                    <form  h:action="@{/LogearseF}" method="post">
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control form-control-lg" name="usuario"
@@ -104,44 +104,7 @@
     <!-- END CONVEX JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->
-    <script>
-        $(document).ready(function () {
-            $('#form1').submit(function (event) {
-                event.preventDefault(); // Evita el envío del formulario por defecto
-
-                var form = $(this);
-                var submitBtn = form.find('button[type="submit"]'); // Encuentra el botón de envío del formulario
-                submitBtn.prop('disabled', true); // Desactiva el botón
-
-                var url = form.attr('action');
-                var formData = form.serialize(); // Serializa los datos del formulario
-
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: formData,
-                    success: function (data) {
-                        if (data != "1") {
-                            swal({
-                                title: 'Datos Incorrectos',
-                                type: 'error',
-                                text: 'La contraseña o el Usuario es incorrecto',
-                            });
-                        }
-                        if (data == "1") {
-                            location.replace('/admin/BienvenidoV');
-                        }
-                        submitBtn.prop('disabled', false); // Reactiva el botón después de recibir la respuesta
-                        form[0].reset(); // Limpia los datos del formulario
-                    },
-                    error: function () {
-                        alert("error");
-                        submitBtn.prop('disabled', false); // Reactiva el botón en caso de error
-                    }
-                });
-            });
-        });
-    </script>
+  
 </body>
 
 </html>

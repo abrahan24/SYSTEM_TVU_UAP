@@ -114,7 +114,7 @@ background: linear-gradient(to right, #061161, #780206); /* W3C, IE 10+/ Edge, F
 
               <div class="card-body">
                 <div class="card-block pb-0">
-                  <form id="form1" class="form" action="../../../../RegistroPersona2F" method="post" novalidate>
+                  <form  class="form" action="../../../../RegistroPersona2F" method="post" novalidate>
                     <input type="hidden" th:field="${persona.id_persona}">
                     <input type="hidden" th:field="${usuario.id_usuario}">
                     <h4 class="form-section">
@@ -249,45 +249,7 @@ background: linear-gradient(to right, #061161, #780206); /* W3C, IE 10+/ Edge, F
     </section>
   </div>
   <div th:replace="layout/layoutMain :: scrip1"></div>
-  <script>
-      $(document).ready(function () {
-          $('#form1').submit(function (event) {
-              event.preventDefault(); // Evita el envío del formulario por defecto
-
-              var form = $(this);
-              var submitBtn = form.find('button[type="submit"]'); // Encuentra el botón de envío del formulario
-              submitBtn.prop('disabled', true); // Desactiva el botón
-
-              var url = form.attr('action');
-              var formData = form.serialize(); // Serializa los datos del formulario
-
-              $.ajax({
-                  type: 'POST',
-                  url: url,
-                  data: formData,
-                  success: function (data) {
-
-                      if (data != 0) {
-                        location.replace('/');
-                      }else{
-                          swal({
-                          title: "Registro Fallido",
-                          Text: "El C.I. o el nombre de Usuario ya se encuentran Registrados",
-                          type: 'error',
-
-                          }).then().done();
-                      }                            
-                      submitBtn.prop('disabled', false); // Reactiva el botón después de recibir la respuesta
-                      form[0].reset(); // Limpia los datos del formulario
-                  },
-                  error: function () {
-                      submitBtn.prop('disabled', false); // Reactiva el botón en caso de error
-                  }
-              });
-          });
-      });
-
-  </script>
+ 
   <script>
     $(document).ready(function() {
     $('.selectB').select2();

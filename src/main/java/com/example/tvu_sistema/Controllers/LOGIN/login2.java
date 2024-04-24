@@ -4,7 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,21 +20,35 @@ public class login2 {
      @Autowired
 	private IUsuarioService usuarioService;
 
-    @PostMapping(value = "LoginF") // Pagina principal
-    public String LoginF(HttpServletRequest request,RedirectAttributes flash,
-    @RequestParam(value = "usuario") String usuario,
-    @RequestParam(value = "contrasena") String contrasena
-    ) {
-            Integer a = usuarioService.validar_usuario(usuario, contrasena);
-            
-            if (a != 0) {
-                Usuario usuario2 = usuarioService.findOne(Long.valueOf(usuarioService.validar_usuario(usuario, contrasena)));
+   // Funciòn de iniciar sesiòn administrador
+	@RequestMapping(value = "/LogearseF", method = RequestMethod.POST)
+	public String logearseF(@RequestParam(value = "usuario") String user,
+			@RequestParam(value = "contrasena") String contrasena, Model model, HttpServletRequest request,
+			RedirectAttributes flash) {
+		// los dos parametros de usuario, contraseña vienen del formulario html
+		Usuario usuario = usuarioService.getUsuarioContraseña(user, contrasena);
 
-                HttpSession session = request.getSession(true);
-                session.setAttribute("usuario", usuario2);
-                session.setAttribute("persona", usuario2.getPersona());
-                return "1";
-            }
-            return "0";
-    }
+		if (usuario != null) {
+			if (usuario.getEst_usuario().equals("C")) {
+				return "redirect:/cerrar_sesionAdm";
+			}
+			HttpSession sessionAdministrador = request.getSession(true);
+			
+
+			
+			
+			sessionAdministrador.setAttribute("usuario", usuario);
+			sessionAdministrador.setAttribute("persona", usuario.getPersona());
+
+			flash.addAttribute("success", usuario.getPersona().getNombre());
+
+			
+			
+			return "redirect:/LoginV";
+
+		} else {
+			return "redirect:/admin/BienvenidoV";
+		}
+
+	}
 }

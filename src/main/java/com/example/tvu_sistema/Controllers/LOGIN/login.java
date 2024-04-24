@@ -35,7 +35,7 @@ public class login {
         if (request.getSession().getAttribute("persona") != null) {
 
 
-            return "login/bienvenidoV";
+            return "/login/bienvenidoV";
         }else{
             return "redirect:/LoginV";
         }

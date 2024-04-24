@@ -11,7 +11,9 @@ public interface IUsuarioService {
 
 	public Usuario findOne(Long id);
 
-	public Integer validar_usuario(String usuario, String contrasena);
+	//public Integer validar_usuario(String usuario, String contrasena);
 
-	public Long validar_usuario2(String usuario, String contrasena);
+	//public Long validar_usuario2(String usuario, String contrasena);
+
+	public Usuario getUsuarioContraseña(String nom_usuario, String contrasena);
 }
