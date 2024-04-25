@@ -20,17 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.tvu_sistema.Models.Entity.Persona;
 import com.example.tvu_sistema.Models.Entity.Programa;
 import com.example.tvu_sistema.Models.IService.IDias_transmisionService;
-import com.example.tvu_sistema.Models.IService.IGeneroService;
 import com.example.tvu_sistema.Models.IService.IHorarioService;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
-import com.example.tvu_sistema.Models.IService.IProfesionService;
 import com.example.tvu_sistema.Models.IService.IProgramaService;
-import com.example.tvu_sistema.Models.IService.ITieneService;
 import com.example.tvu_sistema.Models.IService.ITransmiteService;
-import com.example.tvu_sistema.Models.IService.IUsuarioService;
 import com.example.tvu_sistema.Models.Otros.Encryptar;
 import com.example.tvu_sistema.Models.Repository.ProgramaR.ProgramaRepository;
 
@@ -56,21 +51,11 @@ public class programaGet {
 
         if (request.getSession().getAttribute("persona") != null) {
 
-            List<Programa> programas = programaService.lista_programas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Programa programa2 : programas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(programa2.getId_programa()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
+            List<Programa> programas = programaService.findAll();
+            
+       
             model.addAttribute("programas", programas);
-            model.addAttribute("id_encryptado", encryptedIds);
-
+  
             model.addAttribute("horarios", horarioService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());

@@ -175,7 +175,7 @@ background: linear-gradient(to right, #061161, #780206); /* W3C, IE 10+/ Edge, F
                         <div class="form-group">
                           <label>Genero</label>
                             <div class="controls">
-                                <select style="width: 100%;" name="genero" id="select1" required class="selectB form-control">
+                                <select style="width: 100%;" name="genero" id="select1" required class="selectB form-control" th:field="${persona.genero}">
                                   <th:block th:each="g : ${generos}">
                                     <option th:value="${g.id_genero}" th:text="${g.desc_genero}"></option>
                                   </th:block>

@@ -15,19 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Dias_transmision;
-import com.example.tvu_sistema.Models.Entity.Persona;
-import com.example.tvu_sistema.Models.Entity.Profesion;
+
 import com.example.tvu_sistema.Models.Entity.Programa;
-import com.example.tvu_sistema.Models.Entity.Tiene;
+
 import com.example.tvu_sistema.Models.Entity.Transmite;
-import com.example.tvu_sistema.Models.Entity.Usuario;
+
 import com.example.tvu_sistema.Models.IService.IDias_transmisionService;
-import com.example.tvu_sistema.Models.IService.IPersonaService;
-import com.example.tvu_sistema.Models.IService.IProfesionService;
+
 import com.example.tvu_sistema.Models.IService.IProgramaService;
-import com.example.tvu_sistema.Models.IService.ITieneService;
+
 import com.example.tvu_sistema.Models.IService.ITransmiteService;
-import com.example.tvu_sistema.Models.IService.IUsuarioService;
 
 @RestController
 public class programaPost {
