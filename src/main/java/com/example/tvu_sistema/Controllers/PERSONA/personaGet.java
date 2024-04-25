@@ -124,7 +124,7 @@ public class personaGet {
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
 
-            return "persona/registroPersonaA";
+            return "persona/formPersona";
 
         } catch (Exception e) {
 

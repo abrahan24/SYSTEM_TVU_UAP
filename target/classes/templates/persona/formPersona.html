@@ -109,7 +109,7 @@
                     <select th:if="${persona.id_persona != null}" style="width: 100%;" name="profesiones" id="select2"
                         class="selectB2" multiple="multiple" disabled>
                         <th:block th:each="p : ${profesiones}">
-                            <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}"></option>
+                            <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option>
                         </th:block>
                     </select>
 
