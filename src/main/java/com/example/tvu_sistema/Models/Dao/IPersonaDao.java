@@ -58,7 +58,7 @@ public interface  IPersonaDao extends CrudRepository<Persona, Long>{
     @Query(value = "select * from lista_personas()", nativeQuery = true)
     public List<Persona> lista_personas();
     //----------------------------------------------------------------
-
+    
 
 
 }

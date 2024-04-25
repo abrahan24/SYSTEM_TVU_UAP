@@ -5,10 +5,11 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
@@ -20,7 +21,7 @@ import com.example.tvu_sistema.Models.IService.IProfesionService;
 import com.example.tvu_sistema.Models.IService.ITieneService;
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
 
-@RestController
+@Controller
 public class personaPost {
     @Autowired
 	private IPersonaService personaService;
@@ -32,42 +33,35 @@ public class personaPost {
 	private IUsuarioService usuarioService;
 
     @PostMapping(value = "admin/RegistroPersonaF")
-    public String RegistroPersonaF(@Validated Persona persona,RedirectAttributes flash,HttpServletRequest request, 
+    public ResponseEntity<String> RegistroPersonaF(@Validated Persona persona,RedirectAttributes flash,HttpServletRequest request, 
     @RequestParam(name="genero",required = false)Integer id_genero,
-    @RequestParam(name="profesiones[]",required = false)Long[] id_profesion
+    @RequestParam(name="profesiones",required = false)Long[] id_profesion
     ){
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-		usuario = usuarioService.findOne(usuario.getId_usuario());
-
-        Long resultado = personaService.insertar_persona(
-            persona.getNombre(), 
-            persona.getAp_paterno(), 
-            persona.getAp_materno(), 
-            persona.getEdad(), 
-            persona.getCi(), 
-            persona.getNum_celular(), 
-            id_genero);
-
-        if (resultado != 0) {
+        
+        if (usuario != null) {
+            persona.setEstado_persona("A");
+            personaService.save(persona);
             for (int i = 0; i < id_profesion.length; i++) {
 
+                
                 Profesion profesion = profesionService.findOne(id_profesion[i]);
-
-                Persona persona2 = personaService.findOne(resultado); // funcion de la BD
 
                 Tiene tiene = new Tiene(); // profesion y la persona
 
                 tiene.setEstado_tiene("A");            
-                tiene.setPersona(persona2);
+                tiene.setPersona(persona);
                 tiene.setProfesion(profesion);
                 tieneService.save(tiene);
             }    
-            return "1";
+            return ResponseEntity.ok("Se realizó el registro correctamente");
         }else{
-            return "0";
+            return ResponseEntity.ok("Error Al Registrar Persona");
         }
-    }    
+    }
+    
+
     @PostMapping(value = "RegistroPersona2F")
     public String RegistroPersona2F(@Validated Persona persona,@Validated Usuario usuario, RedirectAttributes flash,HttpServletRequest request,    
     @RequestParam(name="genero",required = false)Integer id_genero,

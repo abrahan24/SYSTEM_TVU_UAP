@@ -31,130 +31,9 @@
                     </div>
                     <div class="card-body">
                       <div class="px-3">
+                        <div id="FormularioPersona">
 
-                        <th:block th:if="${persona.id_persona == null}" >
-                          <form id="form1" class="form" action="/admin/RegistroPersonaF" method="post" novalidate>
-                        </th:block>
-                        <th:block th:if="${persona.id_persona != null}" >
-                          <form action="/admin/RegistroPersona2F" method="post" class="form" novalidate>
-                        </th:block>
-
-                        
-                          <input type="hidden" th:field="${persona.id_persona}">
-                          <h4 class="form-section">
-                            <i class="icon-user"></i> Datos Personales
-                          </h4>
-                          <div class="row">
-                            <div class="col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Nombre</label>
-                                <div class="controls">
-                                    <input th:field="${persona.nombre}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Apellido Paterno</label>
-                                <div class="controls">
-                                    <input th:field="${persona.ap_paterno}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Apellido Materno</label>
-                                <div class="controls">
-                                    <input th:field="${persona.ap_materno}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-2 col-md-12">
-                              <div class="form-group">
-                                <label>Edad</label>
-                                <div class="controls">
-                                    <input th:field="${persona.edad}" type="number" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Nro. de Cedula de Identidad </label>
-                                <div class="controls">
-                                    <input th:field="${persona.ci}" type="number" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-12">
-                              <div class="form-group">
-                                <label>Nro. Celular </label>
-                                <div class="controls">
-                                    <input th:field="${persona.num_celular}" type="number" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-                                </div>                      
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Genero</label>
-                                  <div class="controls">
-                                      <select style="width: 100%;" th:field="${persona.genero}" id="select1" required class="selectB form-control">
-                                        <th:block th:each="g : ${generos}">
-                                          <option th:value="${g.id_genero}" th:text="${g.desc_genero}"></option>
-                                        </th:block>
-                                      </select>
-                                  </div>                      
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12 col-md-12">
-                              <div class="form-group">
-                                <label>Profesiones</label>
-                                <button th:if="${persona.id_persona != null}" type="button" class="badge badge-pill badge-dark" data-toggle="popover" data-content="<b>El selector de Profesiones esta desabilitado</b>" data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                                  ❔
-                                </button>
-                                <button th:if="${persona.id_persona == null}" type="button" class="badge badge-pill badge-dark" data-toggle="popover" data-content="<b> Despues de Registrar no se podra Editar</b>" data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                                  ❔
-                                </button>
-                                <div class="controls">
-
-                                  <select th:if="${persona.id_persona == null}" style="width: 100%;" name="profesiones[]" id="select2" required class="selectB2" multiple="multiple" >
-                                    <th:block th:each="p : ${profesiones}">
-                                      <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}"></option>
-                                    </th:block>
-                                  </select>
-
-                                  <select th:if="${persona.id_persona != null}" style="width: 100%;" name="profesiones[]" id="select2" class="selectB2" multiple="multiple" disabled>
-                                    <th:block th:each="p : ${profesiones}">
-                                      <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}"></option>
-                                    </th:block>
-                                  </select>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-10 col-md-12">
-                              <button th:if="${persona.id_persona == null}" style="width: 100%;" type="submit" class="btn btn-success py-2">
-                                <b>GUARDAR</b>
-                              </button>
-                              <button th:if="${persona.id_persona != null}" style="width: 100%;" type="submit" class="btn btn-info py-2">
-                                <b>ACTUALIZAR INFORMACIÓN</b>
-                              </button>
-                            </div>
-                            <div class="col-lg-2 col-md-12">
-                              <a th:if="${persona.id_persona == null}" style="width: 100%;" href="#table_body" class="btn btn-warning py-2">
-                                <b>Ver Lista</b>
-                              </a>
-                              <a th:if="${persona.id_persona != null}" href="/admin/RegistroPersonaV" style="width: 100%;" type="submit" class="btn btn-danger py-2">
-                                <b>CANCELAR</b>
-                              </a>
-                            </div>
-                          </div>
-                        </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -178,7 +57,7 @@
                     <div class="card-body">
                       <div class="px-3" id="fragmentContainer">
                         
-                        <th:block th:replace="persona/tablePersona :: table"></th:block>
+                        <div id="TablaPersona"></div>
                         
                       </div>
                     </div>
@@ -200,14 +79,41 @@
 
   
   <div th:replace="layout/layoutMain :: scrip1"></div>
-  <div th:replace="layout/mensajes :: submit_form"></div>
+  <!-- <div th:replace="layout/mensajes :: submit_form"></div> -->
+  
   <script>
     $(document).ready(function() {
-    $('.selectB').select2();
-    $('.selectB2').select2();
+    // $('.selectB').select2();
+    // $('.selectB2').select2();
+    cargarTabla();
+    cargarFormulario();
     });
+    
   </script>
-  <script>
+  <script th:inline="javascript">
+    
+    //cargarFormulario();
+
+    function cargarTabla() {
+      $.ajax({
+        type: 'POST',
+        url: "/admin/tablePersona",  // Ruta del metodo del controlador en Spring Boot
+        success: function (response) {
+          $("#TablaPersona").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+        }
+      });
+    }
+
+    function cargarFormulario() {
+        $.ajax({
+          type: 'POST',
+          url: "/admin/NuevaPersona",  // Ruta del metodo del controlador en Spring Boot
+          success: function (response) {
+
+            $("#FormularioPersona").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+          }
+        });
+      }
     function MandarURL(a) {
         swal({
             title: 'Eliminar Registro?',
@@ -224,21 +130,42 @@
             cancelButtonClass: 'btn btn-danger ml-1',
         });
     }
-    function loadFragment() {
-        $.ajax({
-            url: '/admin/tablePersona', // The controller endpoint that returns the fragment
-            method: 'GET',
-            success: function (data) {
-                $('#fragmentContainer').html(data);
-                $('.scroll-horizontal').DataTable( {
-                    "scrollX": true
-                } );
-            },
-            error: function (error) {
-                console.log('Failed to load fragment:', error);
+
+    function cargarModFormulario(id) {
+              //alert("AAAAAAAAAAAAAAAAAAA");
+              $.ajax({
+                url: '/admin/editar-persona/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+                method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+                // Envía el parámetro "id" al servidor
+                success: function (response) {
+
+                  $("#FormularioUser").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+                  var div = document.getElementById("FormularioUser");
+                  div.scrollIntoView({ behavior: 'smooth' });
+                  toastr.info('¿Modificar Registro?');
+                },
+                error: function (xhr, status, error) {
+                  // Maneja los errores de la solicitud AJAX
+                  console.log(error);
+                }
+              });
             }
-        });
-    }
+
+    // function loadFragment() {
+    //     $.ajax({
+    //         url: '/admin/tablePersona', // The controller endpoint that returns the fragment
+    //         method: 'GET',
+    //         success: function (data) {
+    //             $('#fragmentContainer').html(data);
+    //             $('.scroll-horizontal').DataTable( {
+    //                 "scrollX": true
+    //             } );
+    //         },
+    //         error: function (error) {
+    //             console.log('Failed to load fragment:', error);
+    //         }
+    //     });
+    // }
   </script>
 
 </body>

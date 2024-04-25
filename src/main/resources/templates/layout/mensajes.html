@@ -43,14 +43,15 @@
                         url: url,
                         data: formData,
                         success: function (data) {
-
-                            if (data != 0) {
+                            console.log(data);
+                            if (data != null) {
                                 swal({
                                 title: "Registro Exitoso",
                                 type: 'success',
 
                                 }).then().done();
-                                loadFragment();    
+                                // loadFragment(); 
+                                cargarTabla();   
                             }else{
                                 swal({
                                 title: "Registro Fallido",

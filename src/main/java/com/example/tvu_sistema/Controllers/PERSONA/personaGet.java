@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,21 +51,22 @@ public class personaGet {
 
         if (request.getSession().getAttribute("persona") != null) {
 
-            List<Persona> personas = personaService.lista_personas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Persona persona2 : personas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(persona2.getId_persona()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
+
+
+            // List<Persona> personas = personaService.lista_personas();
+            // List<String> encryptedIds = new ArrayList<>();
+            // for (Persona persona2 : personas) {
+            //     try {
+            //         String id_encryptado = Encryptar.encrypt(Long.toString(persona2.getId_persona()));
+            //         encryptedIds.add(id_encryptado);    
+            //     } catch (Exception e) {
+            //         // TODO: handle exception
+            //         System.out.println(e);
+            //     }
                 
-            }
-            model.addAttribute("personas", personas);
-            model.addAttribute("id_encryptado", encryptedIds);
-            
+            // }
+            model.addAttribute("personas", personaService.findAll());
+            // model.addAttribute("id_encryptado", encryptedIds);
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
 
@@ -77,28 +79,23 @@ public class personaGet {
         }
     }
 
-    @GetMapping("/tablePersona")
+    @PostMapping("/tablePersona")
     public String tablePersona(@Validated Persona persona, Model model,RedirectAttributes flash,HttpServletRequest request) throws Exception {
 
-        List<Persona> personas = personaService.lista_personas();
-        List<String> encryptedIds = new ArrayList<>();
-        for (Persona persona2 : personas) {
-            try {
-                String id_encryptado = Encryptar.encrypt(Long.toString(persona2.getId_persona()));
-                encryptedIds.add(id_encryptado);    
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println(e);
-            }
-            
-        }
-        model.addAttribute("personas", personas);
-        model.addAttribute("id_encryptado", encryptedIds);
+        model.addAttribute("personas", personaService.findAll());
         
         model.addAttribute("generos", generoService.findAll());
         model.addAttribute("profesiones", profesionService.findAll());
         
-        return "persona/tablePersona :: table";
+        return "persona/tablePersona";
+    }
+
+    @PostMapping(value = "/NuevaPersona")
+    public String NuevaPersona(HttpServletRequest request, Model model) {
+        model.addAttribute("persona", new Persona());
+        model.addAttribute("generos", generoService.findAll());
+        model.addAttribute("profesiones", profesionService.findAll());
+        return "persona/formPersona";
     }
 
     @RequestMapping(value = "/eliminar-persona/{id_persona}")
@@ -116,26 +113,13 @@ public class personaGet {
     }
 
     @RequestMapping(value = "/editar-persona/{id_persona}")
-    public String editar_r(@PathVariable("id_persona") String id_persona, Model model) {
+    public String editar_r(@PathVariable("id_persona") Long id_persona, Model model) {
         try {
-            Long id_per = Long.parseLong(Encryptar.decrypt(id_persona));
-            Persona persona = personaService.findOne(id_per);
+           
+            Persona persona = personaService.findOne(id_persona);
             model.addAttribute("persona", persona);
 
-            List<Persona> personas = personaService.lista_personas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Persona persona2 : personas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(persona2.getId_persona()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
-            model.addAttribute("personas", personas);
-            model.addAttribute("id_encryptado", encryptedIds);
+            // model.addAttribute("personas", personaService.findAll());
             
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
