@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
@@ -105,18 +106,16 @@ public class reportajeGet {
         return "reportaje/formReportaje";
     }
 
-    @RequestMapping(value = "/eliminar-reportaje/{id_reportaje}")
-    public String eliminar_r(@PathVariable("id_reportaje") String id_reportaje) throws Exception {
-        try {
-            Long id_repor = Long.parseLong(Encryptar.decrypt(id_reportaje));
-            Reportaje reportaje = reportajeService.findOne(id_repor);
-            reportaje.setEst_reportaje("X");
-            reportajeService.save(reportaje);
-            return "redirect:/admin/RegistroReportajeA";
 
-        } catch (Exception e) {
-            return "redirect:/admin/BienvenidoV";
-        }
+     @PostMapping(value = "/eliminar-reportaje/{id_reportaje}")
+    @ResponseBody
+    public void EliminarReportaje(HttpServletRequest request, Model model,
+            @PathVariable("id_reportaje") Long id_reportaje) {
+                Reportaje reportaje = reportajeService.findOne(id_reportaje);
+                reportaje.setEst_reportaje("X");
+                reportajeService.save(reportaje);
+             
+       
     }
 
     @RequestMapping(value = "/editar-reportaje/{id_reportaje}")

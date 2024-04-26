@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
@@ -96,18 +97,14 @@ public class programaGet {
         return "programa/formPrograma";
     }
 
-    @RequestMapping(value = "/eliminar-programa/{id_programa}")
-       public String eliminar_r(@PathVariable("id_programa") String id_programa) throws Exception {
-        try {
-            Long id_prog = Long.parseLong(Encryptar.decrypt(id_programa));
-            Programa programa = programaService.findOne(id_prog);
-            programa.setEst_programa("X");
-            programaService.save(programa);
-            return "redirect:/admin/RegistroProgramaA";
-
-        } catch (Exception e) {
-            return "redirect:/admin/BienvenidoV";
-        }
+     @PostMapping(value = "/eliminar-programa/{id_programa}")
+    @ResponseBody
+    public void EliminarPrograma(HttpServletRequest request, Model model,
+            @PathVariable("id_programa") Long id_programa) {
+                Programa programa = programaService.findOne(id_programa);
+                programa.setEst_programa("X");
+                programaService.save(programa);
+       
     }
 
     @RequestMapping(value = "/editar-programa/{id_programa}")

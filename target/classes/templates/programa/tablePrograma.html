@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="prog, index : ${programas}">
+          <tr th:each="prog, index : ${programas}" th:if="${prog.est_programa != 'X'}">
             <td scope="row">
               <b th:text="${index.index + 1}"  ></b>
             </td>
@@ -32,11 +32,19 @@
             <td th:text="${prog.ano_programa}" ></td>
             <td>
               <div class="btn-group btn-group-justified btn-round">
-                <a style="width: 100%;"
-                  th:attr="onclick='cargarModFormulario(\'' + ${prog.id_programa} + '\')'"
-                  class="btn btn-blue btn-round mb-0">⚙️</a>
-                <a th:id="${prog.id_programa}" style="width: 100%;" onclick="MandarURL(this.id)"
-                  class="btn btn-danger btn-round mb-0">🗑️</a>
+                <a
+                style="width: 100%"
+                href="#FormularioPrograma"
+                th:attr="onclick='cargarModFormulario(\'' + ${prog.id_programa} + '\')'"
+                class="btn btn-blue btn-round mb-0"
+                >⚙️</a
+              >
+              <a
+                style="width: 100%"
+                th:attr="onclick='EliminarRegistro(\'' + ${prog.id_programa} + '\' , \'' + ${prog.desc_programa} + '\')'"
+                class="btn btn-danger btn-round mb-0"
+                >🗑️</a
+              >
               </div>
             </td>
           </tr>

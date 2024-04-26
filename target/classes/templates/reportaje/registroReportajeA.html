@@ -80,13 +80,8 @@
   
   <div th:replace="layout/layoutMain :: scrip1"></div>
 
-  <!-- <script>
-    $(document).ready(function() {
-    $('.selectB').select2();
-    $('.selectB_2').select2();
-    $('.selectB_3').select2();
-    $('.selectM').select2();    
-    });
+  <script>
+ 
     function MandarId(param) {
       
       $.ajax({
@@ -111,54 +106,86 @@
       });
       
     };
-  </script> -->
-  <script th:inline="javascript">
+  </script>
+    <script th:inline="javascript">
     
-    cargarTabla();
-    cargarFormulario();
-
-    function cargarTabla() {
-      $.ajax({
-        type: 'POST',
-        url: "/admin/tableReportaje",  // Ruta del metodo del controlador en Spring Boot
-        success: function (response) {
-          $("#TablaReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-        }
-      });
-    }
-
-    function cargarFormulario() {
+      cargarTabla();
+      cargarFormulario();
+  
+      function cargarTabla() {
         $.ajax({
           type: 'POST',
-          url: "/admin/NuevoReportaje",  // Ruta del metodo del controlador en Spring Boot
+          url: "/admin/tableReportaje",  // Ruta del metodo del controlador en Spring Boot
           success: function (response) {
-
-            $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+            $("#TablaReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
           }
         });
       }
-
-
-    function cargarModFormulario(id) {
-              //alert("AAAAAAAAAAAAAAAAAAA");
+  
+      function cargarFormulario() {
+          $.ajax({
+            type: 'POST',
+            url: "/admin/NuevoReportaje",  // Ruta del metodo del controlador en Spring Boot
+            success: function (response) {
+  
+              $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+            }
+          });
+        }
+  
+  
+      function cargarModFormulario(id) {
+                //alert("AAAAAAAAAAAAAAAAAAA");
+                $.ajax({
+                  url: '/admin/editar-reportaje/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+                  method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+                  // Envía el parámetro "id" al servidor
+                  success: function (response) {
+  
+                    $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+                    
+                    toastr.info('¿Modificar Registro?');
+                  },
+                  error: function (xhr, status, error) {
+                    // Maneja los errores de la solicitud AJAX
+                    console.log(error);
+                  }
+                });
+              }
+  
+              function EliminarRegistro(id, nombre) {
+          Swal.fire({
+            title: "Atencion!",
+            text: "¿Estas seguro que desea eliminar el registro: " + nombre + "?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "SI, Eliminar",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Si el usuario hace clic en "Sí, eliminar"
               $.ajax({
-                url: '/admin/editar-reportaje/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
-                method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
-                // Envía el parámetro "id" al servidor
+                type: 'POST',
+                url: "/admin/eliminar-reportaje/" + id,
                 success: function (response) {
-
-                  $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                  
-                  toastr.info('¿Modificar Registro?');
+                  cargarTabla();
+                  Swal.fire(
+                    'Eliminado!',
+                    'El registro se ha eliminado con éxito.',
+                    'success'
+                  );
                 },
                 error: function (xhr, status, error) {
-                  // Maneja los errores de la solicitud AJAX
                   console.log(error);
                 }
               });
             }
-
-  </script>
+          });
+        }
+  
+    </script>
 </body>
 
 </html>

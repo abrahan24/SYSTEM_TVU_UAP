@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="repor, index : ${reportajes}">
+          <tr th:each="repor, index : ${reportajes}" th:if="${repor.est_reportaje != 'X'}">
             <td scope="row">
               <b th:text="${index.index + 1}"  ></b>
             </td>
@@ -44,11 +44,19 @@
 
             <td>
               <div class="btn-group btn-group-justified btn-round">
-                <a style="width: 100%;"
-                  th:attr="onclick='cargarModFormulario(\'' + ${repor.id_reportaje} + '\')'"
-                  class="btn btn-blue btn-round mb-0">⚙️</a>
-                <a th:id="${repor.id_reportaje}" style="width: 100%;" onclick="MandarURL(this.id)"
-                  class="btn btn-danger btn-round mb-0">🗑️</a>
+                <a
+                style="width: 100%"
+                href="#FormularioReportaje"
+                th:attr="onclick='cargarModFormulario(\'' + ${repor.id_reportaje} + '\')'"
+                class="btn btn-blue btn-round mb-0"
+                >⚙️</a
+              >
+              <a
+                style="width: 100%"
+                th:attr="onclick='EliminarRegistro(\'' + ${repor.id_reportaje} + '\' , \'' + ${repor.tema_reportaje} + '\')'"
+                class="btn btn-danger btn-round mb-0"
+                >🗑️</a
+              >
               </div>
             </td>
           </tr>

@@ -50,12 +50,12 @@ public class reportajePost {
                 reportaje.setEst_reportaje("A");
                 reportaje.setF_reportaje(f_reportaje);
                 reportajeService.save(reportaje);
-                return ResponseEntity.ok("Se realizó el registro correctamente");
+                return ResponseEntity.ok("Registrar");
             }else{
                 reportaje.setEst_reportaje("A");
                 reportaje.setF_reportaje(f_reportaje);
                 reportajeService.save(reportaje);
-                return ResponseEntity.ok("Se edito el registro correctamente");
+                return ResponseEntity.ok("Editar");
             }
                
         } else {

@@ -67,17 +67,17 @@ public class programaPost {
                 programa.setHr_empiezo_pograma(hr_empiezo_pograma3);
                 programa.setHr_fin_programa(hr_fin_programa3);
                 programaService.save(programa);
-                return ResponseEntity.ok("Se realizó el registro correctamente");
+                return ResponseEntity.ok("Registrar");
             }else{
                 programa.setEst_programa("A");
                 programa.setHr_empiezo_pograma(hr_empiezo_pograma3);
                 programa.setHr_fin_programa(hr_fin_programa3);
                 programaService.save(programa);
-                return ResponseEntity.ok("Se edito el registro correctamente");
+                return ResponseEntity.ok("Editar");
             }
                
         } else {
-            return ResponseEntity.ok("Error Al Registrar Persona");
+            return ResponseEntity.ok("Error Al Registrar el programa");
         }
     }
 
