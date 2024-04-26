@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
@@ -84,18 +85,14 @@ public class personaGet {
         return "persona/formPersona";
     }
 
-    @RequestMapping(value = "/eliminar-persona/{id_persona}")
-       public String eliminar_r(@PathVariable("id_persona") String id_persona) throws Exception {
-        try {
-            Long id_per = Long.parseLong(Encryptar.decrypt(id_persona));
-            Persona persona = personaService.findOne(id_per);
-            persona.setEstado_persona("X");
-            personaService.save(persona);
-            return "redirect:/admin/RegistroPersonaV";
 
-        } catch (Exception e) {
-            return "redirect:/admin/BienvenidoV";
-        }
+    @PostMapping(value = "/eliminar-persona/{id_persona}")
+    @ResponseBody
+    public void EliminarPersona(HttpServletRequest request, Model model,
+            @PathVariable("id_persona") Long id_persona) {
+        Persona persona = personaService.findOne(id_persona);
+        persona.setEstado_persona("X");
+        personaService.save(persona);
     }
 
     @RequestMapping(value = "/editar-persona/{id_persona}",method = RequestMethod.GET)
@@ -105,8 +102,6 @@ public class personaGet {
             Persona persona = personaService.findOne(id_persona);
             model.addAttribute("persona", persona);
 
-            // model.addAttribute("personas", personaService.findAll());
-            
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
             model.addAttribute("edit", "true");

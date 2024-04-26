@@ -35,9 +35,8 @@
             >⚙️</a
           >
           <a
-            th:id="${per.id_persona}"
             style="width: 100%"
-            onclick="MandarURL(this.id)"
+            th:attr="onclick='EliminarRegistro(\'' + ${per.id_persona} + '\' , \'' + ${per.nombre} + '\')'"
             class="btn btn-danger btn-round mb-0"
             >🗑️</a
           >

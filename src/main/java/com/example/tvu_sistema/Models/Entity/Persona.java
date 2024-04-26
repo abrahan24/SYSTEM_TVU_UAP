@@ -15,10 +15,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -60,6 +63,11 @@ public class Persona implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
 	private List<Reportaje> reportajes;
+
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "persona_profesion", joinColumns = @JoinColumn(name = "id_persona"), inverseJoinColumns = @JoinColumn(name = "id_profesion"))
+    private Set<Profesion> profesion;
 
     @ManyToMany(mappedBy = "personas")
     private Set<Pleca> plecas = new HashSet<>();

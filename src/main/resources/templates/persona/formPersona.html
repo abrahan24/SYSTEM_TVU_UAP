@@ -117,26 +117,23 @@
                                         </button>
                                         <div class="controls">
 
-                                            <select th:if="${persona.tienes == null}" style="width: 100%;"
-                                                name="profesiones" id="select2" required class="selectB2"
-                                                multiple="multiple">
-                                                <th:block th:each="p : ${profesiones}">
-                                                    <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}">
+                                            <select th:if="${persona.id_persona != null}" th:field="${persona.profesion}"
+                                                style="width: 100%;"  id="select3"  required
+                                                class="selectB2 form-control" multiple="multiple">
+                                                <th:block th:each="pr : ${profesiones}">
+                                                    <option th:value="${pr.id_profesion}" th:text="${pr.desc_profesion}">
                                                     </option>
                                                 </th:block>
                                             </select>
 
-                                            <select th:if="${persona.tienes != null}" style="width: 100%;"
-                                                name="profesiones" id="select2" class="selectB2" multiple="multiple">
-                                                <th:block th:each="p : ${profesiones}">
-                                                    <!-- <option th:if="${p}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option> -->
-                                                    <!-- <th:block th:each="pp : ${persona.tienes}">
-                                                        <option th:if="${pp.persona.id_persona == p.persona.id_persona}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option>
-
-                                                    </th:block> -->
+                                            <select th:if="${persona.id_persona == null}" th:field="${persona.profesion}"
+                                                style="width: 100%;"  id="select3" class="selectB2 form-control"
+                                                multiple="multiple">
+                                                <th:block th:each="pr : ${profesiones}">
+                                                    <option th:value="${pr.id_profesion}" th:text="${pr.desc_profesion}">
+                                                    </option>
                                                 </th:block>
                                             </select>
-
                                         </div>
                                     </div>
                                 </div>
@@ -189,9 +186,20 @@
               contentType: 'application/x-www-form-urlencoded',
               success: function (response) {
                 var mensaje = response;
-                // alert("aaaaa");
-                // console.log(response);
-                // form.find('input, textarea, select').val('');
+                if (mensaje == "Registrar") {
+                    Swal.fire({
+                    title: 'Error!',
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500                    })
+                } else {
+                    Swal.fire({
+                    title: 'Actualización Exitosa!',
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+                }
                 cargarFormulario();
                 cargarTabla();
                 
