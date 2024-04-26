@@ -68,14 +68,26 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
-                                    <div class="form-group">
-                                        <label>Nro. de Cedula de Identidad </label>
-                                        <div class="controls">
-                                            <input th:field="${persona.ci}" type="number" name="text"
-                                                class="form-control" required
-                                                data-validation-required-message="Necesita ingresar los datos">
+                                    <th:block th:if="${persona.id_persona != null}">
+                                        <div class="form-group">
+                                            <label>Nro. de Cedula de Identidad </label>
+                                            <div class="controls">
+                                                <input th:field="${persona.ci}" type="number" name="text"
+                                                    class="form-control" required readonly
+                                                    data-validation-required-message="Necesita ingresar los datos">
+                                            </div>
                                         </div>
-                                    </div>
+                                    </th:block>
+                                    <th:block th:if="${persona.id_persona == null}">
+                                        <div class="form-group">
+                                            <label>Nro. de Cedula de Identidad </label>
+                                            <div class="controls">
+                                                <input th:field="${persona.ci}" type="number" name="text"
+                                                    class="form-control" required
+                                                    data-validation-required-message="Necesita ingresar los datos">
+                                            </div>
+                                        </div>
+                                    </th:block>
                                 </div>
                                 <div class="col-lg-2 col-md-12">
                                     <div class="form-group">

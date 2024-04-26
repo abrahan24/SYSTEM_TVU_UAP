@@ -42,17 +42,15 @@ public class personaPost {
     @RequestParam(name="profesiones",required = false)Long[] id_profesion
     , Model model){
         Persona persona2 = personaService.getPersonaCI(persona.getCi());
-        if (persona2 != null) {
-          
-            
-            model.addAttribute("generos", generoService.findAll());
-            model.addAttribute("profesiones", profesionService.findAll());
-            return ResponseEntity.ok("existe"); 
-        }
+      
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
         
         if (usuario != null) {
             if (persona.getId_persona() == null) {
+                if (persona2 != null) {
+          
+                    return ResponseEntity.ok("existe"); 
+                }
                 persona.setEstado_persona("A");
                 personaService.save(persona);
                 
