@@ -4,8 +4,11 @@
             <div class="card box-shadow-3">
                 <div class="card-header">
                     <div class="card-title-wrap bar-success">
-                        <h4 class="card-title" id="basic-layout-form">
+                        <h4 th:if="${persona.id_persona == null}" class="card-title" id="basic-layout-form">
                             Nuevo Registro - Persona
+                        </h4>
+                        <h4 th:if="${persona.id_persona != null}" class="card-title" id="basic-layout-form">
+                            Actualizar Registro - Persona
                         </h4>
                     </div>
                     <p class="mb-0">
