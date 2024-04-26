@@ -17,40 +17,9 @@
           <div class="content-wrapper">
             <div class="container-fluid">
               <!-- Basic form layout section start -->
-              <section id="basic-form-layouts">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card box-shadow-3">
-                      <div class="card-header">
-                        <div class="card-title-wrap bar-success">
-                          <h4
-                            th:if="${persona.id_persona == null}"
-                            class="card-title"
-                            id="basic-layout-form"
-                          >
-                            Nuevo Registro - Persona
-                          </h4>
-                        </div>
-                        <p class="mb-0">
-                          El registro corresponde a los datos personales del
-                          personal de trabajo (Presentadores, Reporteros,
-                          etc...)
-                        </p>
-                      </div>
-                      <div class="card-body">
-                        <div class="px-3">
-                          <form class="form" id="form1" action="/admin/RegistroPersonaF" method="post" novalidate>
-                              <div id="FormularioPersona">
-
-                              </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
+              <div id="FormularioPersona">
+                
+              </div>
               <!-- ========= -->
               <!-- TABLA -->
               <!-- ========= -->
@@ -89,60 +58,46 @@
     <!-- <div th:replace="layout/mensajes :: submit_form"></div> -->
 
     <script>
-      $(document).ready(function () {
-        $(".scroll-horizontal").DataTable({
-          scrollX: true,
-        });
-        cargarFormulario();
-        cargarTabla();
+      // $(document).ready(function () {
+      //   $(".scroll-horizontal").DataTable({
+      //     scrollX: true,
+      //   });
+      //   // cargarFormulario();
+      //   cargarTabla();
         
-      });
-      $('#form1').submit(function (event) {
-          event.preventDefault();
-          var form = document.getElementById("form1");
-          var action = form.action;
-          //alert("la action es: " + action);
-          var formData = $(this).serialize();
+      // });
+      // $('#form1').submit(function (event) {
+      //     event.preventDefault();
+      //     var form = document.getElementById("form1");
+      //     var action = form.action;
+      //     //alert("la action es: " + action);
+      //     var formData = $(this).serialize();
          
-          $.ajax({
-              type: 'POST',
-              url: $(this).attr('action'),
-              data: formData,
-              contentType: 'application/x-www-form-urlencoded',
-              success: function (response) {
-                var mensaje = response;
-                if (mensaje != 'Ya existe un registro con este C.I.') {
-                  cargarFormulario();
-                  cargarTabla();
-                  var div = document.getElementById("dataTable");
-                  div.scrollIntoView({ behavior: 'smooth' });
-                  //toastr.success(mensaje);
-                  Swal.fire(
-                    'Registrado!',
-                    mensaje + '.',
-                    'success'
-                  );
-                  // limpiarFormularioR();
-                } else {
-                  Swal.fire(
-                    'Imposible Registrar!',
-                    mensaje + '.',
-                    'error'
-                  );
-                  //toastr.info(mensaje);
-                }
-              },
-              error: function (xhr, status, error) {
-                toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
-                console.error(error);
-                // Manejo de errores
-              }
-            });
+      //     $.ajax({
+      //         type: 'POST',
+      //         url: $(this).attr('action'),
+      //         data: formData,
+      //         contentType: 'application/x-www-form-urlencoded',
+      //         success: function (response) {
+      //           var mensaje = response;
+      //           alert("aaaaa");
+      //           console.log(response);
+      //           cargarFormulario();
+      //           cargarTabla();
+                
+      //         },
+      //         error: function (xhr, status, error) {
+      //           toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+      //           console.error(error);
+      //           // Manejo de errores
+      //         }
+      //       });
             
-        });
+      //   });
     </script>
     <script th:inline="javascript">
-      //cargarFormulario();
+      cargarFormulario();
+      cargarTabla();
 
       function cargarTabla() {
         $.ajax({
@@ -176,9 +131,8 @@
         method: "GET", // Utiliza el método HTTP que corresponda (GET, POST, etc.)
         // Envía el parámetro "id" al servidor
         success: function (response) {
-          $("#form1").html(response); // Actualiza el contenido del div con la respuesta del servidor
-          var div = document.getElementById("form1");
-          div.scrollIntoView({ behavior: "smooth" });
+          $("#FormularioPersona").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          
           toastr.info("¿Modificar Registro?");
         },
         error: function (xhr, status, error) {

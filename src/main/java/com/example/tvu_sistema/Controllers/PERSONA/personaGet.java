@@ -98,7 +98,7 @@ public class personaGet {
         }
     }
 
-    @RequestMapping(value = "/editar-persona/{id_persona}")
+    @RequestMapping(value = "/editar-persona/{id_persona}",method = RequestMethod.GET)
     public String editar_r(@PathVariable("id_persona") Long id_persona, Model model) {
         try {
            

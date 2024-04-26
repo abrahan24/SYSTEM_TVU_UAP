@@ -1,144 +1,209 @@
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-shadow-3">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title" id="basic-layout-form">
+                            Nuevo Registro - Persona
+                        </h4>
+                    </div>
+                    <p class="mb-0">
+                        El registro corresponde a los datos personales del
+                        personal de trabajo (Presentadores, Reporteros,
+                        etc...)
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="px-3">
+                        <form class="form" id="form1" action="/admin/RegistroPersonaF" method="post" novalidate>
+                            <input type="hidden" th:field="${persona.id_persona}">
+                            <h4 class="form-section">
+                                <i class="icon-user"></i> Datos Personales
+                            </h4>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <div class="controls">
+                                            <input th:field="${persona.nombre}" type="text" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Apellido Paterno</label>
+                                        <div class="controls">
+                                            <input th:field="${persona.ap_paterno}" type="text" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Apellido Materno</label>
+                                        <div class="controls">
+                                            <input th:field="${persona.ap_materno}" type="text" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-12">
+                                    <div class="form-group">
+                                        <label>Edad</label>
+                                        <div class="controls">
+                                            <input th:field="${persona.edad}" type="number" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Nro. de Cedula de Identidad </label>
+                                        <div class="controls">
+                                            <input th:field="${persona.ci}" type="number" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-12">
+                                    <div class="form-group">
+                                        <label>Nro. Celular </label>
+                                        <div class="controls">
+                                            <input th:field="${persona.num_celular}" type="number" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Genero</label>
+                                        <div class="controls">
+                                            <select style="width: 100%;" th:field="${persona.genero}" id="select1"
+                                                required class="selectB form-control">
+                                                <th:block th:each="g : ${generos}">
+                                                    <option th:value="${g.id_genero}" th:text="${g.desc_genero}">
+                                                    </option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label>Profesiones</label>
+                                        <button th:if="${persona.id_persona != null}" type="button"
+                                            class="badge badge-pill badge-dark" data-toggle="popover"
+                                            data-content="<b>El selector de Profesiones esta desabilitado</b>"
+                                            data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                                            ❔
+                                        </button>
+                                        <button th:if="${persona.id_persona == null}" type="button"
+                                            class="badge badge-pill badge-dark" data-toggle="popover"
+                                            data-content="<b> Despues de Registrar no se podra Editar</b>"
+                                            data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                                            ❔
+                                        </button>
+                                        <div class="controls">
 
-<input type="hidden" th:field="${persona.id_persona}">
-<h4 class="form-section">
-    <i class="icon-user"></i> Datos Personales
-</h4>
-<div class="row">
-    <div class="col-lg-4 col-md-12">
-        <div class="form-group">
-            <label>Nombre</label>
-            <div class="controls">
-                <input th:field="${persona.nombre}" type="text" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-12">
-        <div class="form-group">
-            <label>Apellido Paterno</label>
-            <div class="controls">
-                <input th:field="${persona.ap_paterno}" type="text" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-12">
-        <div class="form-group">
-            <label>Apellido Materno</label>
-            <div class="controls">
-                <input th:field="${persona.ap_materno}" type="text" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-2 col-md-12">
-        <div class="form-group">
-            <label>Edad</label>
-            <div class="controls">
-                <input th:field="${persona.edad}" type="number" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-12">
-        <div class="form-group">
-            <label>Nro. de Cedula de Identidad </label>
-            <div class="controls">
-                <input th:field="${persona.ci}" type="number" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2 col-md-12">
-        <div class="form-group">
-            <label>Nro. Celular </label>
-            <div class="controls">
-                <input th:field="${persona.num_celular}" type="number" name="text" class="form-control" required
-                    data-validation-required-message="Necesita ingresar los datos">
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-12">
-        <div class="form-group">
-            <label>Genero</label>
-            <div class="controls">
-                <select style="width: 100%;" th:field="${persona.genero}" id="select1" required
-                    class="selectB form-control">
-                    <th:block th:each="g : ${generos}">
-                        <option th:value="${g.id_genero}" th:text="${g.desc_genero}"></option>
-                    </th:block>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12 col-md-12">
-        <div class="form-group">
-            <label>Profesiones</label>
-            <button th:if="${persona.id_persona != null}" type="button" class="badge badge-pill badge-dark"
-                data-toggle="popover" data-content="<b>El selector de Profesiones esta desabilitado</b>"
-                data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                ❔
-            </button>
-            <button th:if="${persona.id_persona == null}" type="button" class="badge badge-pill badge-dark"
-                data-toggle="popover" data-content="<b> Despues de Registrar no se podra Editar</b>"
-                data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                ❔
-            </button>
-            <div class="controls">
+                                            <select th:if="${persona.tienes == null}" style="width: 100%;"
+                                                name="profesiones" id="select2" required class="selectB2"
+                                                multiple="multiple">
+                                                <th:block th:each="p : ${profesiones}">
+                                                    <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}">
+                                                    </option>
+                                                </th:block>
+                                            </select>
 
-                <select th:if="${persona.tienes == null}" style="width: 100%;" name="profesiones"
-                    id="select2" required class="selectB2" multiple="multiple">
-                    <th:block th:each="p : ${profesiones}">
-                        <option th:value="${p.id_profesion}" th:text="${p.desc_profesion}"></option>
-                    </th:block>
-                </select>
+                                            <select th:if="${persona.tienes != null}" style="width: 100%;"
+                                                name="profesiones" id="select2" class="selectB2" multiple="multiple">
+                                                <th:block th:each="p : ${profesiones}">
+                                                    <!-- <option th:if="${p}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option> -->
+                                                    <!-- <th:block th:each="pp : ${persona.tienes}">
+                                                        <option th:if="${pp.persona.id_persona == p.persona.id_persona}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option>
 
-                <select th:if="${persona.tienes != null}" style="width: 100%;" name="profesiones"
-                    id="select2" class="selectB2" multiple="multiple">
-                    <th:block th:each="p : ${profesiones}">
-                        <!-- <option th:if="${p}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option> -->
-                        <th:block th:each="pp : ${persona.tienes}">
-                            <option th:if="${pp.persona.id_persona == p.persona.id_persona}" th:value="${p.id_profesion}" th:text="${p.desc_profesion}" selected></option>
+                                                    </th:block> -->
+                                                </th:block>
+                                            </select>
 
-                        </th:block>
-                    </th:block>
-                </select>
-
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10 col-md-12">
+                                    <button th:if="${persona.id_persona == null}" style="width: 100%;" type="submit"
+                                        class="btn btn-success py-2">
+                                        <b>GUARDAR</b>
+                                    </button>
+                                    <button th:if="${persona.id_persona != null}" style="width: 100%;" type="submit"
+                                        class="btn btn-info py-2">
+                                        <b>ACTUALIZAR INFORMACIÓN</b>
+                                    </button>
+                                </div>
+                                <div class="col-lg-2 col-md-12">
+                                    <a th:if="${persona.id_persona == null}" style="width: 100%;" href="#table_body"
+                                        class="btn btn-warning py-2">
+                                        <b>Ver Lista</b>
+                                    </a>
+                                    <a th:if="${persona.id_persona != null}" href="/admin/RegistroPersonaV"
+                                        style="width: 100%;" type="submit" class="btn btn-danger py-2">
+                                        <b>CANCELAR</b>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-lg-10 col-md-12">
-        <button th:if="${persona.id_persona == null}" style="width: 100%;" type="submit"
-            class="btn btn-success py-2">
-            <b>GUARDAR</b>
-        </button>
-        <button th:if="${persona.id_persona != null}" style="width: 100%;" type="submit"
-            class="btn btn-info py-2">
-            <b>ACTUALIZAR INFORMACIÓN</b>
-        </button>
-    </div>
-    <div class="col-lg-2 col-md-12">
-        <a th:if="${persona.id_persona == null}" style="width: 100%;" href="#table_body"
-            class="btn btn-warning py-2">
-            <b>Ver Lista</b>
-        </a>
-        <a th:if="${persona.id_persona != null}" href="/admin/RegistroPersonaV" style="width: 100%;"
-            type="submit" class="btn btn-danger py-2">
-            <b>CANCELAR</b>
-        </a>
-    </div>
-</div>
+</section>
 
 <script>
     $(document).ready(function () {
         $('.selectB').select2();
         $('.selectB2').select2();
+        $('#form1').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("form1");
+          var action = form.action;
+          //alert("la action es: " + action);
+          var formData = $(this).serialize();
+         
+          $.ajax({
+              type: 'POST',
+              url: $(this).attr('action'),
+              data: formData,
+              contentType: 'application/x-www-form-urlencoded',
+              success: function (response) {
+                var mensaje = response;
+                // alert("aaaaa");
+                // console.log(response);
+                // form.find('input, textarea, select').val('');
+                cargarFormulario();
+                cargarTabla();
+                
+              },
+              error: function (xhr, status, error) {
+                toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+                console.error(error);
+                // Manejo de errores
+              }
+            });
+            
+        });
     });
 </script>
 
