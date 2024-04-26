@@ -43,18 +43,7 @@ public class personaPost {
             if (persona.getId_persona() == null) {
                 persona.setEstado_persona("A");
                 personaService.save(persona);
-                for (int i = 0; i < id_profesion.length; i++) {
-
-                    Profesion profesion = profesionService.findOne(id_profesion[i]);
-
-                    Tiene tiene = new Tiene(); // profesion y la persona
-
-                    tiene.setEstado_tiene("A");            
-                    tiene.setPersona(persona);
-                    tiene.setProfesion(profesion);
-                    tieneService.save(tiene);
-                } 
-
+                
                 return ResponseEntity.ok("Registrar");
             } else {
                 persona.setEstado_persona("A");
