@@ -62,5 +62,10 @@ public class PersonaServiceImpl implements IPersonaService{
     public List<Persona> lista_personas() {
         // TODO Auto-generated method stub
         return (List<Persona>) personaDao.lista_personas();
+    }
+
+    @Override
+    public Persona getPersonaCI(String ci) {
+        return personaDao.getPersonaCI(ci);
     }    
 }

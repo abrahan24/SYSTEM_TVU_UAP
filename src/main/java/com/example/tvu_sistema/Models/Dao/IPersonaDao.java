@@ -59,6 +59,8 @@ public interface  IPersonaDao extends CrudRepository<Persona, Long>{
     public List<Persona> lista_personas();
     //----------------------------------------------------------------
     
+    @Query("Select p from Persona p where p.ci = ?1 and p.estado_persona != 'X'")
+    public Persona getPersonaCI(String ci);
 
 
 }

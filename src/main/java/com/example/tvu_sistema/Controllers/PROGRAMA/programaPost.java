@@ -55,6 +55,7 @@ public class programaPost {
         Date hr_fin_programa2 = formatter.parse(hr_fin_programa);
         Time hr_fin_programa3 = new Time(hr_fin_programa2.getTime());
         LocalDate fechaActual = LocalDate.now();
+        
         int añoActual = fechaActual.getYear();
         String ano_programa = String.valueOf(añoActual);
 

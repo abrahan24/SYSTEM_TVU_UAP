@@ -38,4 +38,6 @@ public interface IPersonaService {
 
     public List<Persona> lista_personas();
 
+    public Persona getPersonaCI(String ci);
+
 }

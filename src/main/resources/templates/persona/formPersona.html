@@ -188,11 +188,19 @@
                 var mensaje = response;
                 if (mensaje == "Registrar") {
                     Swal.fire({
-                    title: 'Error!',
+                    title: 'Registro Exitoso!',
                     icon: "success",
                     showConfirmButton: false,
                     timer: 1500                    })
-                } else {
+                } if(mensaje == "existe"){
+                Swal.fire({
+                title: 'Error, Ya existe una persona con ese C.I.!',
+                icon: "warning",
+                showConfirmButton: false,
+                timer: 2000
+              });
+                }
+                else {
                     Swal.fire({
                     title: 'Actualización Exitosa!',
                     icon: "success",
