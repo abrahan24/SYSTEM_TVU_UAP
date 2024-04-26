@@ -1,15 +1,18 @@
 package com.example.tvu_sistema.Controllers.PERSONA;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
@@ -41,25 +44,64 @@ public class personaPost {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
         
         if (usuario != null) {
-            persona.setEstado_persona("A");
-            personaService.save(persona);
-            for (int i = 0; i < id_profesion.length; i++) {
+            if (persona.getId_persona() == null) {
+                persona.setEstado_persona("A");
+                personaService.save(persona);
+                for (int i = 0; i < id_profesion.length; i++) {
 
+                    Profesion profesion = profesionService.findOne(id_profesion[i]);
+
+                    Tiene tiene = new Tiene(); // profesion y la persona
+
+                    tiene.setEstado_tiene("A");            
+                    tiene.setPersona(persona);
+                    tiene.setProfesion(profesion);
+                    tieneService.save(tiene);
+                } 
+
+                return ResponseEntity.ok("Se realizó el registro correctamente");
+            } else {
                 
-                Profesion profesion = profesionService.findOne(id_profesion[i]);
-
-                Tiene tiene = new Tiene(); // profesion y la persona
-
-                tiene.setEstado_tiene("A");            
-                tiene.setPersona(persona);
-                tiene.setProfesion(profesion);
-                tieneService.save(tiene);
-            }    
-            return ResponseEntity.ok("Se realizó el registro correctamente");
+                personaService.save(persona);
+                return ResponseEntity.ok("Se modifico el registro correctamente");
+            }
+               
         }else{
             return ResponseEntity.ok("Error Al Registrar Persona");
         }
     }
+
+    // @PostMapping(value = "/ModPersonaG")
+    // @ResponseBody
+    // public ResponseEntity<String> ModUsuarioG(@Validated Persona persona, Model model) {
+    //     Persona persona2 = personaService.findOne(persona.getId_persona());
+
+    //     List<Persona> listapers = personaService.findAll();
+    //     System.out.println("el limite de la lista es: " + listapers.size());
+    //     for (int i = 0; i < listapers.size(); i++) {
+    //         if (listapers.get(i).getCi() == persona2.getCi()) {
+    //             listapers.remove(i);
+    //             break;
+    //         }
+    //     }
+    //     System.out.println("el nuevo limite de la lista es: " + listapers.size());
+    //     int cont = 0;
+    //     for (int i = 0; i < listapers.size(); i++) {
+    //         if (listapers.get(i).getCi().equals(persona.getCi())) {
+    //             cont++;
+    //             break;
+    //         }
+    //     }
+    //     System.out.println("la variable cont: " + cont);
+    //     if (cont == 0) {
+    //         persona.setFechaRegistro(persona2.getFechaRegistro());
+    //         persona.setHoraRegistro(persona2.getHoraRegistro());
+    //         personaService.save(persona);
+    //         return ResponseEntity.ok("Se modificó el registro correctamente");
+    //     } else {
+    //         return ResponseEntity.ok("Ya existe un registro con este C.I.");
+    //     }
+    // }
     
 
     @PostMapping(value = "RegistroPersona2F")
@@ -103,9 +145,5 @@ public class personaPost {
         }else{
             return "0";
         }
-
-        
-
-        
     }    
 }

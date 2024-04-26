@@ -1,173 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head th:replace="layout/layoutMain :: head"></head>
 
-<head th:replace="layout/layoutMain :: head"></head>
+  <body style="background-color: #dee2e6">
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
 
-<body style="background-color: #dee2e6;">
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="wrapper">
+      <div th:replace="layout/layoutMain :: menuLateral"></div>
+      <div th:replace="layout/layoutMain :: menuCabezera"></div>
 
-  <div class="loader-container">
-    <div class="loader"></div>
-  </div>
-
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
-  <div class="wrapper">
-    <div th:replace="layout/layoutMain :: menuLateral"></div>
-    <div th:replace="layout/layoutMain :: menuCabezera"></div>
-
-    <div class="main-panel">
-      <div class="main-content">
-        <div class="content-wrapper">
-          <div class="container-fluid"><!-- Basic form layout section start -->
-            <section id="basic-form-layouts">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card box-shadow-3">
-                    <div class="card-header">
-                      <div class="card-title-wrap bar-success">
-                        <h4 th:if="${persona.id_persona == null}" class="card-title" id="basic-layout-form">Nuevo Registro - Persona</h4>
-                        <h4 th:if="${persona.id_persona != null}" class="card-title" id="basic-layout-form">Actualizar Registro - Persona</h4>
+      <div class="main-panel">
+        <div class="main-content">
+          <div class="content-wrapper">
+            <div class="container-fluid">
+              <!-- Basic form layout section start -->
+              <section id="basic-form-layouts">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card box-shadow-3">
+                      <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                          <h4
+                            th:if="${persona.id_persona == null}"
+                            class="card-title"
+                            id="basic-layout-form"
+                          >
+                            Nuevo Registro - Persona
+                          </h4>
+                        </div>
+                        <p class="mb-0">
+                          El registro corresponde a los datos personales del
+                          personal de trabajo (Presentadores, Reporteros,
+                          etc...)
+                        </p>
                       </div>
-                      <p class="mb-0">El registro corresponde a los datos personales del personal de trabajo (Presentadores, Reporteros, etc...)</p>
-                    </div>
-                    <div class="card-body">
-                      <div class="px-3">
-                        <div id="FormularioPersona">
+                      <div class="card-body">
+                        <div class="px-3">
+                          <form class="form" id="form1" action="/admin/RegistroPersonaF" method="post" novalidate>
+                              <div id="FormularioPersona">
 
+                              </div>
+                          </form>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
-            <!-- ========= -->
-            <!-- TABLA -->
-            <!-- ========= -->
-            <section id="basic-form-layouts">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card box-shadow-3">
-                    <div class="card-header">
-                      <div class="card-title-wrap bar-success">
-                        <h4 class="card-title" id="basic-layout-form">Lista de Registros</h4>
+              <!-- ========= -->
+              <!-- TABLA -->
+              <!-- ========= -->
+              <section id="basic-form-layouts">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card box-shadow-3">
+                      <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                          <h4 class="card-title" id="basic-layout-form">
+                            Lista de Registros
+                          </h4>
+                        </div>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="px-3" id="fragmentContainer">
+                          <div id="TablaPersona"></div>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="card-body">
-                      <div class="px-3" id="fragmentContainer">
-                        
-                        <div id="TablaPersona"></div>
-                        
-                      </div>
-                    </div>
-
                   </div>
                 </div>
-              </div>
-            </section>
-            <!-- // Basic form layout section end -->
+              </section>
+              <!-- // Basic form layout section end -->
+            </div>
           </div>
         </div>
+
+        <div th:replace="layout/layoutMain :: footer"></div>
       </div>
-
-      <div th:replace="layout/layoutMain :: footer"></div>
-
     </div>
-  </div>
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
 
-  
-  <div th:replace="layout/layoutMain :: scrip1"></div>
-  <!-- <div th:replace="layout/mensajes :: submit_form"></div> -->
-  
-  <script>
-    $(document).ready(function() {
-    // $('.selectB').select2();
-    // $('.selectB2').select2();
-    cargarTabla();
-    cargarFormulario();
-    });
-    
-  </script>
-  <script th:inline="javascript">
-    
-    //cargarFormulario();
+    <div th:replace="layout/layoutMain :: scrip1"></div>
+    <!-- <div th:replace="layout/mensajes :: submit_form"></div> -->
 
-    function cargarTabla() {
-      $.ajax({
-        type: 'POST',
-        url: "/admin/tablePersona",  // Ruta del metodo del controlador en Spring Boot
-        success: function (response) {
-          $("#TablaPersona").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-        }
+    <script>
+      $(document).ready(function () {
+        $(".scroll-horizontal").DataTable({
+          scrollX: true,
+        });
+        cargarFormulario();
+        cargarTabla();
+        
       });
-    }
+      $('#form1').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("form1");
+          var action = form.action;
+          //alert("la action es: " + action);
+          var formData = $(this).serialize();
+         
+          $.ajax({
+              type: 'POST',
+              url: $(this).attr('action'),
+              data: formData,
+              contentType: 'application/x-www-form-urlencoded',
+              success: function (response) {
+                var mensaje = response;
+                if (mensaje != 'Ya existe un registro con este C.I.') {
+                  cargarFormulario();
+                  cargarTabla();
+                  var div = document.getElementById("dataTable");
+                  div.scrollIntoView({ behavior: 'smooth' });
+                  //toastr.success(mensaje);
+                  Swal.fire(
+                    'Registrado!',
+                    mensaje + '.',
+                    'success'
+                  );
+                  // limpiarFormularioR();
+                } else {
+                  Swal.fire(
+                    'Imposible Registrar!',
+                    mensaje + '.',
+                    'error'
+                  );
+                  //toastr.info(mensaje);
+                }
+              },
+              error: function (xhr, status, error) {
+                toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+                console.error(error);
+                // Manejo de errores
+              }
+            });
+            
+        });
+    </script>
+    <script th:inline="javascript">
+      //cargarFormulario();
 
-    function cargarFormulario() {
+      function cargarTabla() {
         $.ajax({
-          type: 'POST',
-          url: "/admin/NuevaPersona",  // Ruta del metodo del controlador en Spring Boot
+          type: "POST",
+          url: "/admin/tablePersona", // Ruta del metodo del controlador en Spring Boot
           success: function (response) {
-
-            $("#FormularioPersona").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-          }
+            $("#TablaPersona").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          },
         });
       }
-    function MandarURL(a) {
-        swal({
-            title: 'Eliminar Registro?',
-            type: 'error',
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText: '<a class="text-white" href="/admin/eliminar-persona/' + a + '" >Eliminar</a>',
-            confirmButtonAriaLabel: 'Thumbs up, great!',
-            cancelButtonText: 'Cancelar',
-            cancelButtonAriaLabel: 'Thumbs down',
-            confirmButtonClass: 'btn btn-primary',
-            buttonsStyling: false,
-            cancelButtonClass: 'btn btn-danger ml-1',
+
+      function cargarFormulario() {
+        $.ajax({
+          type: "POST",
+          url: "/admin/NuevaPersona", // Ruta del metodo del controlador en Spring Boot
+          success: function (response) {
+            $("#FormularioPersona").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          },
         });
+      }
+
+      // function limpiarFormularioR() {
+      //   var form = document.getElementById("form1");
+      //   form.reset();
+      // }
+
+      function cargarModFormulario(id) {
+      //alert("AAAAAAAAAAAAAAAAAAA");
+      $.ajax({
+        url: "/admin/editar-persona/" + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+        method: "GET", // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+        // Envía el parámetro "id" al servidor
+        success: function (response) {
+          $("#form1").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          var div = document.getElementById("form1");
+          div.scrollIntoView({ behavior: "smooth" });
+          toastr.info("¿Modificar Registro?");
+        },
+        error: function (xhr, status, error) {
+          // Maneja los errores de la solicitud AJAX
+          console.log(error);
+        },
+      });
     }
-
-    function cargarModFormulario(id) {
-              //alert("AAAAAAAAAAAAAAAAAAA");
-              $.ajax({
-                url: '/admin/editar-persona/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
-                method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
-                // Envía el parámetro "id" al servidor
-                success: function (response) {
-
-                  $("#FormularioUser").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                  var div = document.getElementById("FormularioUser");
-                  div.scrollIntoView({ behavior: 'smooth' });
-                  toastr.info('¿Modificar Registro?');
-                },
-                error: function (xhr, status, error) {
-                  // Maneja los errores de la solicitud AJAX
-                  console.log(error);
-                }
-              });
-            }
-
-    // function loadFragment() {
-    //     $.ajax({
-    //         url: '/admin/tablePersona', // The controller endpoint that returns the fragment
-    //         method: 'GET',
-    //         success: function (data) {
-    //             $('#fragmentContainer').html(data);
-    //             $('.scroll-horizontal').DataTable( {
-    //                 "scrollX": true
-    //             } );
-    //         },
-    //         error: function (error) {
-    //             console.log('Failed to load fragment:', error);
-    //         }
-    //     });
-    // }
-  </script>
-
-</body>
-
+    </script>
+  </body>
 </html>

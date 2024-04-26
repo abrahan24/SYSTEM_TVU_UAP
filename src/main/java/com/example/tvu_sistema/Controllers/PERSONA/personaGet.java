@@ -52,21 +52,7 @@ public class personaGet {
         if (request.getSession().getAttribute("persona") != null) {
 
 
-
-            // List<Persona> personas = personaService.lista_personas();
-            // List<String> encryptedIds = new ArrayList<>();
-            // for (Persona persona2 : personas) {
-            //     try {
-            //         String id_encryptado = Encryptar.encrypt(Long.toString(persona2.getId_persona()));
-            //         encryptedIds.add(id_encryptado);    
-            //     } catch (Exception e) {
-            //         // TODO: handle exception
-            //         System.out.println(e);
-            //     }
-                
-            // }
             model.addAttribute("personas", personaService.findAll());
-            // model.addAttribute("id_encryptado", encryptedIds);
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
 
@@ -123,7 +109,7 @@ public class personaGet {
             
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
-
+            model.addAttribute("edit", "true");
             return "persona/formPersona";
 
         } catch (Exception e) {

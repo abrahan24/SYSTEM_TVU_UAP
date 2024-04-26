@@ -1,5 +1,6 @@
-
-<table id="TablaPersona" class="table display nowrap table-striped table-bordered scroll-horizontal table-hover">
+<table
+  class="table display nowrap table-striped table-bordered scroll-horizontal table-hover"
+>
   <thead id="table_body">
     <tr>
       <th scope="col">N°</th>
@@ -27,40 +28,27 @@
       <td th:text="${per.genero.abreviatura_genero}"></td>
       <td>
         <div class="btn-group btn-group-justified btn-round">
-          <a style="width: 100%;"
+          <a
+            style="width: 100%"
             th:attr="onclick='cargarModFormulario(\'' + ${per.id_persona} + '\')'"
-            class="btn btn-blue btn-round mb-0">⚙️</a>
-          <a th:id="${per.id_persona}" style="width: 100%;" onclick="MandarURL(this.id)"
-            class="btn btn-danger btn-round mb-0">🗑️</a>
+            class="btn btn-blue btn-round mb-0"
+            >⚙️</a
+          >
+          <a
+            th:id="${per.id_persona}"
+            style="width: 100%"
+            onclick="MandarURL(this.id)"
+            class="btn btn-danger btn-round mb-0"
+            >🗑️</a
+          >
         </div>
       </td>
     </tr>
   </tbody>
-  <script>
-    $(document).ready(function () {
-      $('#dataTable').DataTable();
-    });
-  </script>
 
-  <script>
-    function cargarModFormulario(id) {
-              //alert("AAAAAAAAAAAAAAAAAAA");
-              $.ajax({
-                url: '/admin/editar-persona/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
-                method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
-                // Envía el parámetro "id" al servidor
-                success: function (response) {
-
-                  $("#form1").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                  var div = document.getElementById("form1");
-                  div.scrollIntoView({ behavior: 'smooth' });
-                  toastr.info('¿Modificar Registro?');
-                },
-                error: function (xhr, status, error) {
-                  // Maneja los errores de la solicitud AJAX
-                  console.log(error);
-                }
-              });
-            }
-  </script>
 </table>
+<script>
+  $(".scroll-horizontal").DataTable({
+          scrollX: true,
+        });
+</script>
