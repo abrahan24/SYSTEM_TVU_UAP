@@ -41,6 +41,8 @@
                       </button>
                       <div class="controls">
                         <select style="width: 100%;" th:field="${pleca.programa}" id="select88" required class="selectB form-control">
+                            <option value="Seleccione..."  selected ></option>
+
                           <th:block th:each="pro : ${programas}" th:if="${pro.est_programa == 'A' && pro.ano_programa == ano_actual}">
                             <option th:value="${pro.id_programa}" th:text="${pro.desc_programa}"></option>
                           </th:block>
