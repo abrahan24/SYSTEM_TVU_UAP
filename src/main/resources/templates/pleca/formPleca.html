@@ -157,44 +157,60 @@
     $('.selectM').select2();
     $('.selectB').select2();
     $('#form1').submit(function (event) {
-          event.preventDefault();
-          var form = document.getElementById("form1");
-          var action = form.action;
-          //alert("la action es: " + action);
-          var formData = $(this).serialize();
-         
-          $.ajax({
-              type: 'POST',
-              url: $(this).attr('action'),
-              data: formData,
-              contentType: 'application/x-www-form-urlencoded',
-              success: function (response) {
-                var mensaje = response;
-                if (mensaje == "Registrar") {
-                    Swal.fire({
-                    title: 'Registro Exitoso!',
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1500                    })
-                } else {
-                    Swal.fire({
-                    title: 'Actualización Exitosa!',
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1500
-                    })
-                }
-                cargarFormulario();
-                cargarTabla();
-                
-              },
-              error: function (xhr, status, error) {
-                toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
-                console.error(error);
-                // Manejo de errores
-              }
-            });
-            
+        event.preventDefault();
+        var form = document.getElementById("form1");
+        var action = form.action;
+        // Validar que los campos no ocultos no estén vacíos
+        var camposNoOcultos = $(this).find('input[type!="hidden"], select');
+        var camposVacios = camposNoOcultos.filter(function () {
+          return !$(this).val();
         });
+
+        if (camposVacios.length > 0) {
+          // Mostrar un mensaje de error si hay campos vacíos
+          Swal.fire({
+            title: 'Error!',
+            text: 'Por favor, complete todos los campos obligatorios.',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          });
+          return;
+        }
+        var formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr('action'),
+          data: formData,
+          contentType: 'application/x-www-form-urlencoded',
+          success: function (response) {
+            var mensaje = response;
+            if (mensaje == "Registrar") {
+              Swal.fire({
+                title: 'Registro Exitoso!',
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                title: 'Actualización Exitosa!',
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+            cargarFormulario();
+            cargarTabla();
+
+          },
+          error: function (xhr, status, error) {
+            toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+            console.error(error);
+            // Manejo de errores
+          }
+        });
+
+      });
     });
   </script>
