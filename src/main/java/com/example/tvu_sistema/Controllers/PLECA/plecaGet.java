@@ -14,11 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.tvu_sistema.Models.Entity.Persona;
 import com.example.tvu_sistema.Models.Entity.Pleca;
 import com.example.tvu_sistema.Models.Entity.Reportaje;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
@@ -47,22 +50,6 @@ public class plecaGet {
 
         if (request.getSession().getAttribute("persona") != null) {
 
-            List<Pleca> plecas = plecaService.lista_plecas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Pleca pleca2 : plecas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(pleca2.getId_pleca()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
-            model.addAttribute("plecas", plecas);
-            model.addAttribute("id_encryptado", encryptedIds);
-
-
             model.addAttribute("programas", programaService.findAll());
             model.addAttribute("personas", personaService.findAll());        
             model.addAttribute("ano_actual", programaRepository.anoActual());    
@@ -73,73 +60,45 @@ public class plecaGet {
         }
     }
 
-    @GetMapping("/tablePleca")
+    @PostMapping("/tablePleca")
     public String tablePleca(@Validated Pleca pleca, Model model,RedirectAttributes flash,HttpServletRequest request) throws Exception {
-
-        List<Pleca> plecas = plecaService.lista_plecas();
-        List<String> encryptedIds = new ArrayList<>();
-        for (Pleca pleca2 : plecas) {
-            try {
-                String id_encryptado = Encryptar.encrypt(Long.toString(pleca2.getId_pleca()));
-                encryptedIds.add(id_encryptado);    
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println(e);
-            }
-            
-        }
-        model.addAttribute("plecas", plecas);
-        model.addAttribute("id_encryptado", encryptedIds);
-
 
         model.addAttribute("programas", programaService.findAll());
         model.addAttribute("personas", personaService.findAll());
-        
-        return "pleca/tablePleca :: table";
+        model.addAttribute("plecas", plecaService.findAll());
+        return "pleca/tablePleca";
     }
 
-    @RequestMapping(value = "/eliminar-pleca/{id_pleca}")
-       public String eliminar_r(@PathVariable("id_pleca") String id_pleca) throws Exception {
-        try {
-            Long id_ple = Long.parseLong(Encryptar.decrypt(id_pleca));
-            Pleca pleca = plecaService.findOne(id_ple);
-            pleca.setEst_pleca("X");
-            plecaService.save(pleca);
-            return "redirect:/admin/RegistroPlecaA";
-
-        } catch (Exception e) {
-            return "redirect:/admin/BienvenidoV";
-        }
+     @PostMapping(value = "/NuevaPleca")
+    public String NuevaPersona(HttpServletRequest request, Model model) {
+        model.addAttribute("pleca", new Pleca());
+        model.addAttribute("programas", programaService.findAll());
+        model.addAttribute("personas", personaService.findAll());
+        model.addAttribute("ano_actual", programaRepository.anoActual());
+        return "pleca/formPleca";
     }
 
-    @RequestMapping(value = "/editar-pleca/{id_pleca}")
-    public String editar_r(@PathVariable("id_pleca") String id_pleca, Model model) {
+
+    @PostMapping(value = "/eliminar-placa/{id_pleca}")
+    @ResponseBody
+    public void EliminarPersona(HttpServletRequest request, Model model,
+            @PathVariable("id_pleca") Long id_pleca) {
+        Pleca pleca = plecaService.findOne(id_pleca);
+        pleca.setEst_pleca("X");
+        plecaService.save(pleca);
+    }
+
+    @RequestMapping(value = "/editar-pleca/{id_pleca}",method = RequestMethod.GET)
+    public String editar_r(@PathVariable("id_pleca") Long id_pleca, Model model) {
         try {
-            Long id_ple = Long.parseLong(Encryptar.decrypt(id_pleca));
-            Pleca pleca = plecaService.findOne(id_ple);
+            Pleca pleca = plecaService.findOne(id_pleca);
             model.addAttribute("pleca", pleca);
-
-            List<Pleca> plecas = plecaService.lista_plecas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Pleca pleca2 : plecas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(pleca2.getId_pleca()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
-            model.addAttribute("plecas", plecas);
-            model.addAttribute("id_encryptado", encryptedIds);
-
 
             model.addAttribute("programas", programaService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("ano_actual", programaRepository.anoActual());
 
-            return "pleca/registroPlecaA";
+            return "pleca/formPleca";
 
         } catch (Exception e) {
 

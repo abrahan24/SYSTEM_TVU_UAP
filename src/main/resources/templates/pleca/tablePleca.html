@@ -1,59 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <table class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
-        <thead id="table_body">
-          <tr>
-            <th scope="col" >N°</th>
-            <th scope="col">Tema</th>
-            <th scope="col">Programa</th>
-            <th scope="col">Presentadores</th>
-            <th scope="col">Invitados</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Titulo</th>
-            <th scope="col">Video</th>
-            <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="plec, index : ${plecas}">
-            <td scope="row">
-              <b th:text="${index.index + 1}"  ></b>
-            </td>
-            <td th:text="${plec.tema_pleca}" ></td>
-            <td th:text="${plec.programa.desc_programa}" ></td>
-            <td>
-              <button style="width: 100%;" th:id="${plec.id_pleca}" onclick="MandarId(this.id)" type="button" class="btn btn-secondary btn-round mb-0" data-toggle="modal">
-                <b>Ver</b>
-              </button>
-            </td>
-            <td>
-              <button style="width: 100%;" th:id="${plec.id_pleca}" onclick="MandarId2(this.id)" type="button" class="btn btn-secondary btn-round mb-0" data-toggle="modal">
-                <b>Ver</b>
-              </button>
-            </td>
-            <td th:text = "${#dates.format(plec.f_pleca, 'dd/MM/yyyy')}" ></td>
-            <td th:text="${plec.titulo_transmicion_pleca}" ></td>
-            
-            <td>
-              <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" target="_blank" th:href="${plec.url_video_pleca}">
-                <b>Ver</b>
-              </a>
-            </td>
+<table class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
+  <thead id="table_body">
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Tema</th>
+      <th scope="col">Programa</th>
+      <th scope="col">Presentadores</th>
+      <th scope="col">Invitados</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Titulo</th>
+      <th scope="col">Video</th>
+      <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="plec, index : ${plecas}" th:if="${plec.est_pleca != 'X'}">
+      <td scope="row">
+        <b th:text="${index.index + 1}"></b>
+      </td>
+      <td th:text="${plec.tema_pleca}"></td>
+      <td th:text="${plec.programa.desc_programa}"></td>
+      <td>
+        <button style="width: 100%;" th:id="${plec.id_pleca}" onclick="MandarId(this.id)" type="button"
+          class="btn btn-secondary btn-round mb-0" data-toggle="modal">
+          <b>Ver</b>
+        </button>
+      </td>
+      <td>
+        <button style="width: 100%;" th:id="${plec.id_pleca}" onclick="MandarId2(this.id)" type="button"
+          class="btn btn-secondary btn-round mb-0" data-toggle="modal">
+          <b>Ver</b>
+        </button>
+      </td>
+      <td th:text="${#dates.format(plec.f_pleca, 'dd/MM/yyyy')}"></td>
+      <td th:text="${plec.titulo_transmicion_pleca}"></td>
 
-            <td>
-              <div class="btn-group btn-group-justified btn-round">
-                <a th:href="${'/admin/editar-pleca/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
-                <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
-</body>
-</html>
+      <td>
+        <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" target="_blank"
+          th:href="${plec.url_video_pleca}">
+          <b>Ver</b>
+        </a>
+      </td>
+
+      <td>
+        <div class="btn-group btn-group-justified btn-round">
+          <a href="#FormularioPleca"  style="width: 100%;"
+            th:attr="onclick='cargarModFormulario(\'' + ${plec.id_pleca} + '\')'"
+            class="btn btn-blue btn-round mb-0">⚙️</a>
+          <a  style="width: 100%;"
+          th:attr="onclick='EliminarRegistro(\'' + ${plec.id_pleca} + '\' , \'' + ${plec.tema_pleca} + '\')'"
+            class="btn btn-danger btn-round mb-0">🗑️</a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

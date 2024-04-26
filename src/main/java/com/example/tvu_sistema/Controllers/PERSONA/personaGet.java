@@ -41,7 +41,6 @@ public class personaGet {
 
         if (request.getSession().getAttribute("persona") != null) {
 
-
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
@@ -93,7 +92,6 @@ public class personaGet {
 
             model.addAttribute("generos", generoService.findAll());
             model.addAttribute("profesiones", profesionService.findAll());
-            model.addAttribute("edit", "true");
             return "persona/formPersona";
 
         } catch (Exception e) {
