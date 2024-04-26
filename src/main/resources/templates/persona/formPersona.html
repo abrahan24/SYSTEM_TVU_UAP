@@ -123,8 +123,6 @@
                                             <select th:if="${persona.id_persona != null}" th:field="${persona.profesion}"
                                                 style="width: 100%;"  id="select3"  required
                                                 class="selectB2 form-control" multiple="multiple">
-                                                <option value="Seleccione..."  selected ></option>
-
                                                 <th:block th:each="pr : ${profesiones}">
                                                     <option th:value="${pr.id_profesion}" th:text="${pr.desc_profesion}">
                                                     </option>
@@ -134,8 +132,6 @@
                                             <select th:if="${persona.id_persona == null}" th:field="${persona.profesion}"
                                                 style="width: 100%;"  id="select3" class="selectB2 form-control"
                                                 multiple="multiple">
-                                                <option value="Seleccione..."  selected ></option>
-
                                                 <th:block th:each="pr : ${profesiones}">
                                                     <option th:value="${pr.id_profesion}" th:text="${pr.desc_profesion}">
                                                     </option>

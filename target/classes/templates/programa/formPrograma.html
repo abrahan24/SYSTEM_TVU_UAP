@@ -47,7 +47,7 @@
                   <div class="controls">
                     <select style="width: 100%;" th:field="${programa.persona}" id="select2" required
                       class="selectB_2 form-control">
-                      <th:block th:each="pr : ${personas}">
+                      <th:block th:each="pr : ${personas}" th:if="${pr.estado_persona != 'X'}">
                         <option th:value="${pr.id_persona}" th:text="${pr.nombre+' '+pr.ap_paterno+' '+pr.ap_materno}">
                         </option>
                       </th:block>
