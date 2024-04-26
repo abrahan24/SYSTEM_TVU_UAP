@@ -1,173 +1,199 @@
-
-<div id="FormularioPrograma">
-    <th:block th:if="${programa.id_programa == null}" >
-        <form id="form1" th:action="@{/admin/RegistroProgramaF}" method="post" class="form" novalidate>
-      </th:block>
-      <th:block th:if="${programa.id_programa != null}" >
-        <form action="/admin/RegistroPrograma2F" method="post" class="form" novalidate>
-      </th:block>
-
-        <input type="hidden" th:field="${programa.id_programa}">
-        <input type="hidden" th:field="${programa.ano_programa}">
-        <h4 class="form-section">
-          <i class="icon-film"></i> Datos del Programa</h4>
-        <div class="row">
-          <div class="col-lg-4 col-md-12">
-            <div class="form-group">
-              <label>Nombre del Programa</label>
-              <div class="controls">
-                  <input th:field="${programa.desc_programa}" type="text" name="text" class="form-control" required data-validation-required-message="Necesita ingresar los datos">
-              </div>                      
-            </div>
+<section id="basic-form-layouts">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card box-shadow-3">
+        <div class="card-header">
+          <div class="card-title-wrap bar-success">
+            <h4 th:if="${programa.id_programa == null}" class="card-title" id="basic-layout-form">Nuevo Registro -
+              Programa</h4>
+            <h4 th:if="${programa.id_programa != null}" class="card-title" id="basic-layout-form">Actualizar Registro
+              - Programa</h4>
           </div>
-          <div class="col-lg-3 col-md-12">
-              <div class="form-group">
-                  <label>Horario del Programa</label>
+          <p class="mb-0">El registro corresponde a los detalle del programa que se transmite en la TVU</p>
+        </div>
+        <div class="card-body">
+          <div class="px-3">
+            <form id="form1" th:action="@{/admin/RegistroProgramaF}" method="post" class="form" novalidate>
+              <input type="hidden" th:field="${programa.id_programa}">
+              <input type="hidden" th:field="${programa.ano_programa}">
+              <h4 class="form-section">
+                <i class="icon-film"></i> Datos del Programa
+              </h4>
+              <div class="row">
+                <div class="col-lg-4 col-md-12">
+                  <div class="form-group">
+                    <label>Nombre del Programa</label>
+                    <div class="controls">
+                      <input th:field="${programa.desc_programa}" type="text" name="text" class="form-control" required
+                        data-validation-required-message="Necesita ingresar los datos">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                  <div class="form-group">
+                    <label>Horario del Programa</label>
+                    <div class="controls">
+                      <select style="width: 100%;" th:field="${programa.horario}" id="select1" required
+                        class="selectB form-control">
+                        <th:block th:each="hr : ${horarios}">
+                          <option th:value="${hr.id_horario}" th:text="${hr.desc_horario}"></option>
+                        </th:block>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-12">
+                  <label>Personal Encargado del Programa</label>
                   <div class="controls">
-                    <select style="width: 100%;" th:field="${programa.horario}" id="select1" required class="selectB form-control">
-                      <th:block th:each="hr : ${horarios}">
-                        <option th:value="${hr.id_horario}" th:text="${hr.desc_horario}"></option>
-                      </th:block>
-                    </select>
-                  </div>                       
-              </div>
-            </div>
-            <div class="col-lg-5 col-md-12">
-              <label>Personal Encargado del Programa</label>
-                  <div class="controls">
-                    <select style="width: 100%;" th:field="${programa.persona}" id="select2" required class="selectB_2 form-control">
+                    <select style="width: 100%;" th:field="${programa.persona}" id="select2" required
+                      class="selectB_2 form-control">
                       <th:block th:each="pr : ${personas}">
-                        <option th:value="${pr.id_persona}" th:text="${pr.nombre+' '+pr.ap_paterno+' '+pr.ap_materno}"></option>
+                        <option th:value="${pr.id_persona}" th:text="${pr.nombre+' '+pr.ap_paterno+' '+pr.ap_materno}">
+                        </option>
                       </th:block>
                     </select>
-                  </div> 
-            </div>
-        </div>
-        
-        
-
-        <h4 class="form-section">
-          <i class="icon-note"></i>Detalles del Programa
-        </h4>
-        <div class="row">
-          <div class="col-lg-5 col-md-12">
-            <div class="form-group">
-              <label>Dias de Transmision del Programa</label>
-              <button th:if="${programa.id_programa != null}" type="button" class="badge badge-pill badge-dark" data-toggle="popover" data-content="El selector de Dias esta desabilitado" data-original-title="Ayuda" data-trigger="focus">
-                ❔
-              </button>
-              <button th:if="${programa.id_programa == null}" type="button" class="badge badge-pill badge-dark" data-toggle="popover" data-content="<b> Despues de Registrar no se podra Editar</b>" data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                ❔
-              </button>
-              <div class="controls">
-                <select th:if="${programa.id_programa != null}" th:field="${programa.dias_transmision}" style="width: 100%;" name="id_dias_transmision[]" id="select3" required class="selectM form-control" multiple="multiple">
-                  <th:block th:each="dtns : ${dias_transmisiones}">
-                    <option th:value="${dtns.id_dias_transmision}" th:text="${dtns.desc_dias_transmision}"></option>
-                  </th:block>
-                </select>
-
-                <select th:if="${programa.id_programa == null}" th:field="${programa.dias_transmision}" style="width: 100%;" name="id_dias_transmision[]" id="select3" class="selectM form-control" multiple="multiple">
-                  <th:block th:each="dtns : ${dias_transmisiones}">
-                    <option th:value="${dtns.id_dias_transmision}" th:text="${dtns.desc_dias_transmision}"></option>
-                  </th:block>
-                </select>
-
-              </div>                     
-            </div>
-          </div>
-          
-            <div class="col-lg-4 col-md-12">
-              <div class="form-group">
-                  <label for="timesheetinput5">Hora de comienzo del programa</label>
-                      <div class="position-relative has-icon-left">
-                          <input th:if="${programa.id_programa == null}" type="time" id="timesheetinput5" class="form-control" name="hr_empiezo_pogramaa" required>
-                          <input th:if="${programa.id_programa != null}" type="time" id="timesheetinput5" class="form-control" th:value="${hr_empiezo_pogramaa}" name="hr_empiezo_pogramaa" required>
-                          <div class="form-control-position">
-                              <i class="ft-clock"></i>
-                          </div>
-                      </div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-          <div class="col-lg-3 col-md-12">
-              <div class="form-group">
-                  <label for="timesheetinput5">Hora final del programa</label>
-                      <div class="position-relative has-icon-left">
-                          <input th:if="${programa.id_programa == null}" type="time" id="timesheetinput5" class="form-control" name="hr_fin_programaa" required>
-                          <input th:if="${programa.id_programa != null}" type="time" id="timesheetinput5" class="form-control" th:value="${hr_fin_programaa}" name="hr_fin_programaa" required>
-                          <div class="form-control-position">
-                              <i class="ft-clock"></i>
-                          </div>
+              <h4 class="form-section">
+                <i class="icon-note"></i>Detalles del Programa
+              </h4>
+              <div class="row">
+                <div class="col-lg-5 col-md-12">
+                  <div class="form-group">
+                    <label>Dias de Transmision del Programa</label>
+                    <button th:if="${programa.id_programa != null}" type="button" class="badge badge-pill badge-dark"
+                      data-toggle="popover" data-content="El selector de Dias esta desabilitado"
+                      data-original-title="Ayuda" data-trigger="focus">
+                      ❔
+                    </button>
+                    <button th:if="${programa.id_programa == null}" type="button" class="badge badge-pill badge-dark"
+                      data-toggle="popover" data-content="<b> Despues de Registrar no se podra Editar</b>"
+                      data-original-title="Ayuda" data-html="true" data-trigger="focus">
+                      ❔
+                    </button>
+                    <div class="controls">
+                      <select th:if="${programa.id_programa != null}" th:field="${programa.dias_transmision}"
+                        style="width: 100%;" name="id_dias_transmision[]" id="select3" required
+                        class="selectM form-control" multiple="multiple">
+                        <th:block th:each="dtns : ${dias_transmisiones}">
+                          <option th:value="${dtns.id_dias_transmision}" th:text="${dtns.desc_dias_transmision}">
+                          </option>
+                        </th:block>
+                      </select>
+
+                      <select th:if="${programa.id_programa == null}" th:field="${programa.dias_transmision}"
+                        style="width: 100%;" name="id_dias_transmision[]" id="select3" class="selectM form-control"
+                        multiple="multiple">
+                        <th:block th:each="dtns : ${dias_transmisiones}">
+                          <option th:value="${dtns.id_dias_transmision}" th:text="${dtns.desc_dias_transmision}">
+                          </option>
+                        </th:block>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                  <div class="form-group">
+                    <label for="timesheetinput5">Hora de comienzo del programa</label>
+                    <div class="position-relative has-icon-left">
+                      <input th:if="${programa.id_programa == null}" type="time" id="timesheetinput5"
+                        class="form-control" name="hr_empiezo_pogramaa" required>
+                      <input th:if="${programa.id_programa != null}" type="time" id="timesheetinput5"
+                        class="form-control" th:value="${hr_empiezo_pogramaa}" name="hr_empiezo_pogramaa" required>
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-12">
+                  <div class="form-group">
+                    <label for="timesheetinput5">Hora final del programa</label>
+                    <div class="position-relative has-icon-left">
+                      <input th:if="${programa.id_programa == null}" type="time" id="timesheetinput5"
+                        class="form-control" name="hr_fin_programaa" required>
+                      <input th:if="${programa.id_programa != null}" type="time" id="timesheetinput5"
+                        class="form-control" th:value="${hr_fin_programaa}" name="hr_fin_programaa" required>
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="row">
+                <div class="col-lg-10 col-md-12">
+                  <button th:if="${programa.id_programa == null}" style="width: 100%;" type="submit"
+                    class="btn btn-success py-2">
+                    <b>GUARDAR</b>
+                  </button>
+                  <button th:if="${programa.id_programa != null}" style="width: 100%;" type="submit"
+                    class="btn btn-info py-2">
+                    <b>ACTUALIZAR INFORMACIÓN</b>
+                  </button>
+                </div>
+                <div class="col-lg-2 col-md-12">
+                  <a th:if="${programa.id_programa == null}" style="width: 100%;" href="#table_body"
+                    class="btn btn-warning py-2">
+                    <b>Ver Lista</b>
+                  </a>
+                  <a th:if="${programa.id_programa != null}" href="/admin/RegistroProgramaA" style="width: 100%;"
+                    type="submit" class="btn btn-danger py-2">
+                    <b>CANCELAR</b>
+                  </a>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-10 col-md-12">
-            <button th:if="${programa.id_programa == null}" style="width: 100%;" type="submit" class="btn btn-success py-2">
-              <b>GUARDAR</b>
-            </button>
-            <button th:if="${programa.id_programa != null}" style="width: 100%;" type="submit" class="btn btn-info py-2">
-              <b>ACTUALIZAR INFORMACIÓN</b>
-            </button>
-          </div>
-          <div class="col-lg-2 col-md-12">
-            <a th:if="${programa.id_programa == null}" style="width: 100%;" href="#table_body" class="btn btn-warning py-2">
-              <b>Ver Lista</b>
-            </a>
-            <a th:if="${programa.id_programa != null}" href="/admin/RegistroProgramaA" style="width: 100%;" type="submit" class="btn btn-danger py-2">
-              <b>CANCELAR</b>
-            </a>
-          </div>
-        </div>
-      </form>
+      </div>
+    </div>
+  </div>
+</section>
 
     <script>
-        $(document).ready(function() {
-          $('.selectB').select2();
+      $(document).ready(function () {
+        $('.selectB').select2();
         $('.selectB_2').select2();
         $('.selectM').select2();
         $('#form1').submit(function (event) {
           event.preventDefault();
           var form = document.getElementById("form1");
           var action = form.action;
-          //alert("la action es: " + action);
           var formData = $(this).serialize();
-          
-        //   Swal.fire({
-        //     title: 'Cargando...',
-        //     allowOutsideClick: false,
-        //     timerProgressBar: true,
-        //     didOpen: () => {
-        //       Swal.showLoading()
-        //     }
-        //   });
+
+          //   Swal.fire({
+          //     title: 'Cargando...',
+          //     allowOutsideClick: false,
+          //     timerProgressBar: true,
+          //     didOpen: () => {
+          //       Swal.showLoading()
+          //     }
+          //   });
           $.ajax({
-              type: 'POST',
-              url: $(this).attr('action'),
-              data: formData,
-              contentType: 'application/x-www-form-urlencoded',
-              success: function (response) {
-                var mensaje = response;
-                cargarFormulario();
-                  cargarTabla();
-                  //toastr.success(mensaje);
-                  Swal.fire(
-                    'Registrado!',
-                    mensaje + '.',
-                    'success'
-                  );
-    
-              },
-              error: function (xhr, status, error) {
-                toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
-                console.error(error);
-                // Manejo de errores
-              }
-            });
-    
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (response) {
+              var mensaje = response;
+              cargarFormulario();
+              cargarTabla();
+              //toastr.success(mensaje);
+
+            },
+            error: function (xhr, status, error) {
+              toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+              console.error(error);
+              // Manejo de errores
+            }
+          });
+
         });
-        });
-      </script>
-     
-</div>
+      });
+    </script>

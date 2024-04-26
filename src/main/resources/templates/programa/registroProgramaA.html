@@ -18,29 +18,9 @@
       <div class="main-content">
         <div class="content-wrapper">
           <div class="container-fluid"><!-- Basic form layout section start -->
-            <section id="basic-form-layouts">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card box-shadow-3">
-                    <div class="card-header">
-                      <div class="card-title-wrap bar-success">
-                        <h4 th:if="${programa.id_programa == null}" class="card-title" id="basic-layout-form">Nuevo Registro - Programa</h4>
-                        <h4 th:if="${programa.id_programa != null}" class="card-title" id="basic-layout-form">Actualizar Registro - Programa</h4>
-                      </div>
-                      <p class="mb-0">El registro corresponde a los detalle del programa que se transmite en la TVU</p>
-                    </div>
-                    <div class="card-body">
-                      <div class="px-3">
-
-                        <div id="FormularioPrograma">
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <div id="FormularioPrograma">
+              
+            </div>
             <!-- ========= -->
             <!-- TABLA -->
             <!-- ========= -->
@@ -85,18 +65,10 @@
   <div th:replace="layout/layoutMain :: scrip1"></div>
 
 
-  <script>
-    $(document).ready(function() {
-    $('.selectB').select2();
-    $('.selectB_2').select2();
-    $('.selectM').select2();
-    cargarTabla();
-    cargarFormulario();
-    });
-  </script>
   <script th:inline="javascript">
     
-    //cargarFormulario();
+    cargarTabla();
+    cargarFormulario();
 
     function cargarTabla() {
       $.ajax({
@@ -118,22 +90,7 @@
           }
         });
       }
-    function MandarURL(a) {
-        swal({
-            title: 'Eliminar Registro?',
-            type: 'error',
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText: '<a class="text-white" href="/admin/eliminar-programa/' + a + '" >Eliminar</a>',
-            confirmButtonAriaLabel: 'Thumbs up, great!',
-            cancelButtonText: 'Cancelar',
-            cancelButtonAriaLabel: 'Thumbs down',
-            confirmButtonClass: 'btn btn-primary',
-            buttonsStyling: false,
-            cancelButtonClass: 'btn btn-danger ml-1',
-        });
-    }
+
 
     function cargarModFormulario(id) {
               //alert("AAAAAAAAAAAAAAAAAAA");
@@ -143,9 +100,8 @@
                 // Envía el parámetro "id" al servidor
                 success: function (response) {
 
-                  $("#FormularioUser").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                  var div = document.getElementById("FormularioUser");
-                  div.scrollIntoView({ behavior: 'smooth' });
+                  $("#FormularioPrograma").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+                  
                   toastr.info('¿Modificar Registro?');
                 },
                 error: function (xhr, status, error) {
@@ -155,21 +111,6 @@
               });
             }
 
-    // function loadFragment() {
-    //     $.ajax({
-    //         url: '/admin/tablePersona', // The controller endpoint that returns the fragment
-    //         method: 'GET',
-    //         success: function (data) {
-    //             $('#fragmentContainer').html(data);
-    //             $('.scroll-horizontal').DataTable( {
-    //                 "scrollX": true
-    //             } );
-    //         },
-    //         error: function (error) {
-    //             console.log('Failed to load fragment:', error);
-    //         }
-    //     });
-    // }
   </script>
 </body>
 

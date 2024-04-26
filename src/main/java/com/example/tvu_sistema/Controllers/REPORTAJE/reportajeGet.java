@@ -61,20 +61,10 @@ public class reportajeGet {
 
         if (request.getSession().getAttribute("persona") != null) {
 
-            List<Reportaje> reportajes = reportajeService.lista_reportajes();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Reportaje reportaje2 : reportajes) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(reportaje2.getId_reportaje()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
+            List<Reportaje> reportajes = reportajeService.findAll();
+          
             model.addAttribute("reportajes", reportajes);
-            model.addAttribute("id_encryptado", encryptedIds);
+     
 
             model.addAttribute("programas", programaService.findAll());
             model.addAttribute("personas", personaService.findAll());

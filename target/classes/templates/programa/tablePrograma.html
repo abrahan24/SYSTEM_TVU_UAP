@@ -21,9 +21,10 @@
             <td th:text="${prog.desc_programa}" ></td>
             <td th:text="${prog.horario.desc_horario}" ></td>
             <td th:text="${prog.persona.nombre+' '+prog.persona.ap_paterno+' '+prog.persona.ap_materno}" ></td>
+           
             <td>
-              <th:block th:each="tr : ${transmite}" th:if="${tr.programa.id_programa == prog.id_programa}">
-                <span style="width: 100%;" class="badge badge-dark mt-1" th:text="${tr.dias_transmision.desc_dias_transmision}" ></span> <br>
+              <th:block th:each="dias : ${prog.dias_transmision}" >
+                <span style="width: 100%;" class="badge badge-dark mt-1" th:text="${dias.desc_dias_transmision}" ></span> <br>
               </th:block>
             </td>
             <td th:text="${prog.hr_empiezo_pograma}" ></td>
@@ -42,33 +43,10 @@
         </tbody>
         <script>
           $(document).ready(function () {
-            $('#dataTable').DataTable();
 
             $('.scroll-horizontal').DataTable( {
                     "scrollX": true
                 } );
           });
-        </script>
-      
-        <script>
-          function cargarModFormulario(id) {
-                    //alert("AAAAAAAAAAAAAAAAAAA");
-                    $.ajax({
-                      url: '/admin/editar-programa/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
-                      method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
-                      // Envía el parámetro "id" al servidor
-                      success: function (response) {
-      
-                        $("#form1").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                        var div = document.getElementById("form1");
-                        div.scrollIntoView({ behavior: 'smooth' });
-                        toastr.info('¿Modificar Registro?');
-                      },
-                      error: function (xhr, status, error) {
-                        // Maneja los errores de la solicitud AJAX
-                        console.log(error);
-                      }
-                    });
-                  }
         </script>
       </table>

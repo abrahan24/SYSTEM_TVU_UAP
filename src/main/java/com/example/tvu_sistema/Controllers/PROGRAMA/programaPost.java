@@ -61,15 +61,21 @@ public class programaPost {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
             
         if (usuario != null) {
+            if (programa.getId_programa() == null) {
                 programa.setAno_programa(ano_programa);
                 programa.setEst_programa("A");
                 programa.setHr_empiezo_pograma(hr_empiezo_pograma3);
                 programa.setHr_fin_programa(hr_fin_programa3);
                 programaService.save(programa);
+                return ResponseEntity.ok("Se realizó el registro correctamente");
+            }else{
+                programa.setEst_programa("A");
+                programa.setHr_empiezo_pograma(hr_empiezo_pograma3);
+                programa.setHr_fin_programa(hr_fin_programa3);
+                programaService.save(programa);
+                return ResponseEntity.ok("Se edito el registro correctamente");
+            }
                
-                
-           
-            return ResponseEntity.ok("Se realizó el registro correctamente");
         } else {
             return ResponseEntity.ok("Error Al Registrar Persona");
         }

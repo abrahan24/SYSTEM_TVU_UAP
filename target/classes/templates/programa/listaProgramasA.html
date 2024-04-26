@@ -27,34 +27,38 @@
                       <div class="px-3">
                         <div class="row">
                           <div class="col-12">
-                            <table class="table"  >
+                            <table class="table">
                               <thead>
                                 <tr>
-                                 
-                                  <th >Nombre</th>
-                                  <th >Horario</th>
-                                  <th >Personal</th>
-                                  <th >Dias</th>
-                                  <th >Hr.Comienzo</th>
-                                  <th >Hr.Fin</th>
-                                  <th >Gestion</th>
+
+                                  <th>Nombre</th>
+                                  <th>Horario</th>
+                                  <th>Personal</th>
+                                  <th>Dias</th>
+                                  <th>Hr.Comienzo</th>
+                                  <th>Hr.Fin</th>
+                                  <th>Gestion</th>
                                   <th>Operaciones</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr th:each="prog : ${programas}">
-                                  <td th:text="${prog.desc_programa}" ></td>
-                                  <td th:text="${prog.horario.desc_horario}" ></td>
-                                  <td th:text="${prog.persona.nombre+' '+prog.persona.ap_paterno+' '+prog.persona.ap_materno}" ></td>
+                                  <td th:text="${prog.desc_programa}"></td>
+                                  <td th:text="${prog.horario.desc_horario}"></td>
+                                  <td
+                                    th:text="${prog.persona.nombre+' '+prog.persona.ap_paterno+' '+prog.persona.ap_materno}">
+                                  </td>
+
                                   <td>
-                                    <th:block th:each="tr : ${transmite}" th:if="${tr.programa.id_programa == prog.id_programa}">
-                                      <span style="width: 100%;" class="badge badge-dark mt-1" th:text="${tr.dias_transmision.desc_dias_transmision}" ></span> <br>
+                                    <th:block th:each="dias : ${prog.dias_transmision}">
+                                      <span style="width: 100%;" class="badge badge-dark mt-1"
+                                        th:text="${dias.desc_dias_transmision}"></span> <br>
                                     </th:block>
                                   </td>
-                                  <td th:text="${prog.hr_empiezo_pograma}" ></td>
-                                  <td th:text="${prog.hr_fin_programa}" ></td>
-                                  <td th:text="${prog.ano_programa}" ></td>
-                                 
+                                  <td th:text="${prog.hr_empiezo_pograma}"></td>
+                                  <td th:text="${prog.hr_fin_programa}"></td>
+                                  <td th:text="${prog.ano_programa}"></td>
+
                                   <td>
                                     <button class="btn btn-warning"><i class="fa fa-cog"></i></button>
                                     <a class="btn btn-danger"><i class="fa fa-times"></i></a>
