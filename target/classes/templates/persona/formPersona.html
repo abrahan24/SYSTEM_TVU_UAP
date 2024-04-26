@@ -90,6 +90,7 @@
                                         <div class="controls">
                                             <select style="width: 100%;" th:field="${persona.genero}" id="select1"
                                                 required class="selectB form-control">
+
                                                 <th:block th:each="g : ${generos}">
                                                     
                                                     <option th:value="${g.id_genero}" th:text="${g.desc_genero}">
