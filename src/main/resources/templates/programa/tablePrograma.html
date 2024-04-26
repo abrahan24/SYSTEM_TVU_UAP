@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <table id="tablePrograma" class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
+
+    <table class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
         <thead id="table_body">
           <tr>
             <th scope="col" >N°</th>
@@ -38,12 +31,44 @@
             <td th:text="${prog.ano_programa}" ></td>
             <td>
               <div class="btn-group btn-group-justified btn-round">
-                <a th:href="${'/admin/editar-programa/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
-                <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
+                <a style="width: 100%;"
+                  th:attr="onclick='cargarModFormulario(\'' + ${prog.id_programa} + '\')'"
+                  class="btn btn-blue btn-round mb-0">⚙️</a>
+                <a th:id="${prog.id_programa}" style="width: 100%;" onclick="MandarURL(this.id)"
+                  class="btn btn-danger btn-round mb-0">🗑️</a>
               </div>
             </td>
           </tr>
         </tbody>
+        <script>
+          $(document).ready(function () {
+            $('#dataTable').DataTable();
+
+            $('.scroll-horizontal').DataTable( {
+                    "scrollX": true
+                } );
+          });
+        </script>
+      
+        <script>
+          function cargarModFormulario(id) {
+                    //alert("AAAAAAAAAAAAAAAAAAA");
+                    $.ajax({
+                      url: '/admin/editar-programa/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+                      method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+                      // Envía el parámetro "id" al servidor
+                      success: function (response) {
+      
+                        $("#form1").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+                        var div = document.getElementById("form1");
+                        div.scrollIntoView({ behavior: 'smooth' });
+                        toastr.info('¿Modificar Registro?');
+                      },
+                      error: function (xhr, status, error) {
+                        // Maneja los errores de la solicitud AJAX
+                        console.log(error);
+                      }
+                    });
+                  }
+        </script>
       </table>
-</body>
-</html>

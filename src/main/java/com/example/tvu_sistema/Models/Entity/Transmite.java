@@ -28,7 +28,7 @@ import lombok.Setter;
 @Getter
 public class Transmite implements Serializable {
     private static final long serialVersionUID = 2629195288020321924L;
-    
+    //ENTIDAD OPCIONAL
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

@@ -15,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.tvu_sistema.Models.Entity.Persona;
 import com.example.tvu_sistema.Models.Entity.Programa;
 import com.example.tvu_sistema.Models.IService.IDias_transmisionService;
 import com.example.tvu_sistema.Models.IService.IHorarioService;
@@ -68,30 +70,30 @@ public class programaGet {
         }
     }
 
-    @GetMapping("/tablePrograma")
+    @PostMapping("/tablePrograma")
     public String tablePrograma(@Validated Programa programa, Model model,RedirectAttributes flash,HttpServletRequest request) throws Exception {
 
-        List<Programa> programas = programaService.lista_programas();
-        List<String> encryptedIds = new ArrayList<>();
-        for (Programa programa2 : programas) {
-            try {
-                String id_encryptado = Encryptar.encrypt(Long.toString(programa2.getId_programa()));
-                encryptedIds.add(id_encryptado);    
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println(e);
-            }
-            
-        }
+        List<Programa> programas = programaService.findAll();
+      
         model.addAttribute("programas", programas);
-        model.addAttribute("id_encryptado", encryptedIds);
+     
 
         model.addAttribute("horarios", horarioService.findAll());
         model.addAttribute("personas", personaService.findAll());
         model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
         model.addAttribute("transmite", transmiteService.findAll());
         
-        return "programa/tablePrograma :: table";
+        return "programa/tablePrograma";
+    }
+
+        @PostMapping(value = "/NuevoPrograma")
+    public String NuevoPrograma(HttpServletRequest request, Model model) {
+        model.addAttribute("programa", new Programa());
+        model.addAttribute("horarios", horarioService.findAll());
+        model.addAttribute("personas", personaService.findAll());
+        model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
+        model.addAttribute("transmite", transmiteService.findAll());
+        return "programa/formPrograma";
     }
 
     @RequestMapping(value = "/eliminar-programa/{id_programa}")
@@ -109,37 +111,25 @@ public class programaGet {
     }
 
     @RequestMapping(value = "/editar-programa/{id_programa}")
-    public String editar_r(@PathVariable("id_programa") String id_programa, Model model) {
+    public String editar_r(@PathVariable("id_programa") Long id_programa, Model model) {
         try {
-            Long id_prog = Long.parseLong(Encryptar.decrypt(id_programa));
-            Programa programa = programaService.findOne(id_prog);
+       
+
+            Programa programa = programaService.findOne(id_programa);
             model.addAttribute("programa", programa);
 
             model.addAttribute("hr_empiezo_pogramaa", programa.getHr_empiezo_pograma());
             model.addAttribute("hr_fin_programaa", programa.getHr_fin_programa());
 
-            List<Programa> programas = programaService.lista_programas();
-            List<String> encryptedIds = new ArrayList<>();
-            for (Programa programa2 : programas) {
-                try {
-                    String id_encryptado = Encryptar.encrypt(Long.toString(programa2.getId_programa()));
-                    encryptedIds.add(id_encryptado);    
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    System.out.println(e);
-                }
-                
-            }
-            model.addAttribute("programas", programas);
-            model.addAttribute("id_encryptado", encryptedIds);
-
+         
+          
             model.addAttribute("horarios", horarioService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
             model.addAttribute("transmite", transmiteService.findAll());
             model.addAttribute("ano_actual", programaRepository.anoActual());
 
-            return "programa/registroProgramaA";
+            return "programa/formPrograma";
 
         } catch (Exception e) {
 
