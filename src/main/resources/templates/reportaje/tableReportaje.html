@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
     <table class="table display nowrap table-striped table-bordered scroll-horizontal table-hover" th:fragment="table">
         <thead id="table_body">
           <tr>
@@ -51,12 +44,21 @@
 
             <td>
               <div class="btn-group btn-group-justified btn-round">
-                <a th:href="${'/admin/editar-reportaje/'+id_encryptado[__${index.index}__]}" style="width: 100%;"  class="btn btn-blue btn-round mb-0">⚙️</a>
-                <a th:id="${id_encryptado[__${index.index}__]}" style="width: 100%;" onclick="MandarURL(this.id)" class="btn btn-danger btn-round mb-0">🗑️</a>
+                <a style="width: 100%;"
+                  th:attr="onclick='cargarModFormulario(\'' + ${repor.id_reportaje} + '\')'"
+                  class="btn btn-blue btn-round mb-0">⚙️</a>
+                <a th:id="${repor.id_reportaje}" style="width: 100%;" onclick="MandarURL(this.id)"
+                  class="btn btn-danger btn-round mb-0">🗑️</a>
               </div>
             </td>
           </tr>
         </tbody>
+        <script>
+          $(document).ready(function () {
+
+            $('.scroll-horizontal').DataTable( {
+                    "scrollX": true
+                } );
+          });
+        </script>
     </table>
-</body>
-</html>
