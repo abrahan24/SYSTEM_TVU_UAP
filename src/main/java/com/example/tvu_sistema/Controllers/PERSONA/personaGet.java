@@ -1,20 +1,11 @@
 package com.example.tvu_sistema.Controllers.PERSONA;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
-import com.example.tvu_sistema.Models.Entity.Programa;
 import com.example.tvu_sistema.Models.IService.IGeneroService;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
 import com.example.tvu_sistema.Models.IService.IProfesionService;
 import com.example.tvu_sistema.Models.IService.ITieneService;
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
-import com.example.tvu_sistema.Models.Otros.Encryptar;
 
 @Controller
 @RequestMapping("/admin")
@@ -113,14 +102,4 @@ public class personaGet {
         }
     }
 
-    @RequestMapping(value = "/RegistroPersona2F", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String RegistroPersona2F(@Validated Persona persona, RedirectAttributes redirectAttrs
-    ) throws ParseException { // validar los datos capturados (1)
-
-        
-        persona.setEstado_persona("A");
-
-        personaService.save(persona);
-        return "redirect:/admin/RegistroPersonaV";
-    }
 }

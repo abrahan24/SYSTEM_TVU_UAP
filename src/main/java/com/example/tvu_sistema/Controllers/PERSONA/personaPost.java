@@ -57,7 +57,7 @@ public class personaPost {
 
                 return ResponseEntity.ok("Registrar");
             } else {
-                
+                persona.setEstado_persona("A");
                 personaService.save(persona);
                 return ResponseEntity.ok("Editar");
             }

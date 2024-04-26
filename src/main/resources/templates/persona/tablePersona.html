@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr th:each="per, index : ${personas}">
+    <tr th:each="per, index : ${personas}" th:if="${per.estado_persona != 'X'}">
       <td scope="row">
         <b th:text="${index.index + 1}"></b>
       </td>
@@ -30,6 +30,7 @@
         <div class="btn-group btn-group-justified btn-round">
           <a
             style="width: 100%"
+            href="#FormularioPersona"
             th:attr="onclick='cargarModFormulario(\'' + ${per.id_persona} + '\')'"
             class="btn btn-blue btn-round mb-0"
             >⚙️</a
