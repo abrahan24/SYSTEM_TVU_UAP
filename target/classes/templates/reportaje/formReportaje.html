@@ -52,7 +52,7 @@
                     <div class="col-12">
                       <div class="form-group">
                         <label>Nombres de los Entrevistados</label>
-                        <button type="button" class="badge badge-pill badge-dark" data-toggle="popover"
+                        <button id="myButton" type="button" class="badge badge-pill badge-dark" data-toggle="popover"
                           data-content="<b>Seguir la Redacción</b> <hr> <b> Ejemplo </b> <br> - Nombre del 1er Entrevistado.   <br>  - Nombre del 2do Entrevistado  <br>  - Nombre del 3er Entrevistado"
                           data-original-title="Ayuda" data-html="true" data-trigger="focus">
                           ❔
@@ -77,7 +77,7 @@
                     <div class="col-12">
                       <div class="form-group">
                         <label>Del Programa:</label>
-                        <button type="button" class="badge badge-pill badge-dark" data-toggle="popover"
+                        <button type="button" id="myButton1" class="badge badge-pill badge-dark" data-toggle="popover"
                           th:data-content="${'<b> Los Programas que se muestran son de la Gestión actual ' + ano_actual +'</b>'}"
                           data-original-title="Ayuda" data-html="true" data-trigger="focus">
                           ❔
@@ -159,7 +159,7 @@
                     <div class="col-12">
                       <div class="form-group">
                         <label>URL del video</label>
-                        <button type="button" class="badge badge-pill badge-dark" data-toggle="popover"
+                        <button type="button" id="myButton2" class="badge badge-pill badge-dark" data-toggle="popover"
                           data-content="<b>Las URLs deben contener <br> 'http://' o 'https://'</b> <hr> <b> Ejemplo Url facebook. </b> <h6> https://fb.watch/mBUDI6FsaC/ </h6> <b>Ejemplo Url Youtube.</b> <h6>https://www.youtube.com/watch?v=6e4zayYH-VQ </h6> "
                           data-original-title="Ayuda" data-html="true" data-trigger="focus">
                           ❔
@@ -210,6 +210,39 @@
     $('.selectB').select2();
     $('.selectB_2').select2();
     $('.selectM').select2();
+    $('#myButton').click(function () {
+                // Obtiene el contenido del atributo data-content del botón
+                var content = $(this).data('content');
+                
+                // Despliega la alerta con el contenido obtenido
+                Swal.fire({
+                    title: "Ayuda",
+                    html: content,
+                    icon: "info"
+                });
+            });
+            $('#myButton1').click(function () {
+                // Obtiene el contenido del atributo data-content del botón
+                var content = $(this).data('content');
+                
+                // Despliega la alerta con el contenido obtenido
+                Swal.fire({
+                    title: "Ayuda",
+                    html: content,
+                    icon: "info"
+                });
+            });
+            $('#myButton2').click(function () {
+                // Obtiene el contenido del atributo data-content del botón
+                var content = $(this).data('content');
+                
+                // Despliega la alerta con el contenido obtenido
+                Swal.fire({
+                    title: "Ayuda",
+                    html: content,
+                    icon: "info"
+                });
+            });
     $('#form1').submit(function (event) {
       event.preventDefault();
       var form = document.getElementById("form1");

@@ -66,16 +66,7 @@
                 <div class="col-lg-5 col-md-12">
                   <div class="form-group">
                     <label>Dias de Transmision del Programa</label>
-                    <button th:if="${programa.id_programa != null}" type="button" class="badge badge-pill badge-dark"
-                      data-toggle="popover" data-content="El selector de Dias esta desabilitado"
-                      data-original-title="Ayuda" data-trigger="focus">
-                      ❔
-                    </button>
-                    <button th:if="${programa.id_programa == null}" type="button" class="badge badge-pill badge-dark"
-                      data-toggle="popover" data-content="<b> Despues de Registrar no se podra Editar</b>"
-                      data-original-title="Ayuda" data-html="true" data-trigger="focus">
-                      ❔
-                    </button>
+                  
                     <div class="controls">
                       <select th:if="${programa.id_programa != null}" th:field="${programa.dias_transmision}"
                         style="width: 100%;" name="id_dias_transmision[]" id="select3" required
