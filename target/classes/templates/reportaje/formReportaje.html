@@ -85,6 +85,8 @@
                         <div class="controls">
                           <select style="width: 100%;" th:field="${reportaje.programa}" required
                             class="selectB_3 form-control">
+                            <option value="" selected >Seleccione...</option>
+
                             <th:block th:each="pro : ${programas}" th:if="${pro.est_programa == 'A' }">
                               <option th:value="${pro.id_programa}" th:text="${pro.desc_programa}"></option>
                             </th:block>
