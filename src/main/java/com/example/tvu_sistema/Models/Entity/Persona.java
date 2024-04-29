@@ -52,8 +52,7 @@ public class Persona implements Serializable {
     @JoinColumn(name = "id_genero")
     private Genero genero;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
-    private List<Tiene> tienes;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
     private List<Usuario> usuarios;

@@ -84,7 +84,7 @@ public class personaPost {
                 persona.setEstado_persona("A");
                 personaService.save(persona);     
 
-                usuario.setEst_usuario("A");
+                usuario.setEst_usuario("P");
                 usuario.setPersona(persona);
                 usuarioService.save(usuario);
 

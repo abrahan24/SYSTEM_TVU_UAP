@@ -57,8 +57,6 @@ public class Programa implements Serializable {
     @JoinTable(name = "programa_dias_transmision", joinColumns = @JoinColumn(name = "id_programa"), inverseJoinColumns = @JoinColumn(name = "id_dias_transmision"))
     private Set<Dias_transmision> dias_transmision;
 
-    // RELACION OPCIONAL
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programa", fetch = FetchType.LAZY)
-    private List<Transmite> transmites;
+
 
 }

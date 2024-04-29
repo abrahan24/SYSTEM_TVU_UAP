@@ -43,8 +43,6 @@ public class Dias_transmision implements Serializable {
     @ManyToMany(mappedBy = "dias_transmision")
     private Set<Programa> programa;
 
-    //RELACION OPCIONAL
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dias_transmision", fetch = FetchType.LAZY)
-	private List<Transmite> transmites;
+   
     
 }

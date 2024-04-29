@@ -37,8 +37,7 @@ public class Profesion implements Serializable {
     @ManyToMany(mappedBy = "profesion")
     private Set<Persona> persona;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesion", fetch = FetchType.LAZY)
-	private List<Tiene> tienes;
+
 
     
 }
