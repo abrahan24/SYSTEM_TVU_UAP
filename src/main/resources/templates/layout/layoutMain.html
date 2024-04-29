@@ -117,25 +117,25 @@
                 <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
 
                     <li class=" nav-item">
-                        <a href="/admin/RegistroPersonaV">
+                        <a href="/admin/RegistroPersonaV" th:if="${session.usuario.est_usuario != 'P' }">
                             <i class="icon icon-user-follow"></i>
                             <span data-i18n="" class="menu-title">Persona</span>
                         </a>
                     </li>   
                     <li class=" nav-item">
-                        <a href="/admin/RegistroProgramaA">
+                        <a href="/admin/RegistroProgramaA" th:if="${session.usuario.est_usuario != 'P' }">
                             <i class="icon icon-film"></i>
                             <span data-i18n="" class="menu-title">Programa</span>
                         </a>
                     </li>
                     <li class=" nav-item">
-                        <a href="/admin/RegistroReportajeA">
+                        <a href="/admin/RegistroReportajeA" th:if="${session.usuario.est_usuario != 'P' }">
                             <i class="icon-book-open"></i>
                             <span data-i18n="" class="menu-title">Reportaje</span>
                         </a>
                     </li>
                     <li class=" nav-item">
-                        <a href="/admin/RegistroPlecaA">
+                        <a href="/admin/RegistroPlecaA" th:if="${session.usuario.est_usuario != 'P' }">
                             <i class="icon icon-notebook"></i>
                             <span data-i18n="" class="menu-title">Pleca</span>
                         </a>
