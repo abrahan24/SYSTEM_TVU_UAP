@@ -37,6 +37,7 @@ public class Reportaje implements Serializable {
     private String desc_reportaje;
     @Column(length = 10485760)
     private String lugar_reportaje;
+    @Column(length = 10485760)
     private String url_video_reportaje;
     private Date f_reportaje;    
     @Column(length = 10485760)

@@ -36,6 +36,7 @@ public class Pleca implements Serializable{
     private String titulo_transmicion_pleca;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date f_pleca;
+    @Column(length = 10485760)
     private String url_video_pleca;
     @Column(length = 10485760)
     private String invitados_pleca;
