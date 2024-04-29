@@ -18,7 +18,6 @@ import com.example.tvu_sistema.Models.Entity.Persona;
 import com.example.tvu_sistema.Models.IService.IGeneroService;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
 import com.example.tvu_sistema.Models.IService.IProfesionService;
-import com.example.tvu_sistema.Models.IService.ITieneService;
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
 
 @Controller
@@ -30,8 +29,7 @@ public class personaGet {
 	private IGeneroService generoService;
     @Autowired
 	private IProfesionService profesionService;
-    @Autowired
-	private ITieneService tieneService;
+
     @Autowired
 	private IUsuarioService usuarioService;
 

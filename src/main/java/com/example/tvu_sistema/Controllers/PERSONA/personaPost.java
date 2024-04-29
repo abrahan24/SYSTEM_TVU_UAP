@@ -14,12 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tvu_sistema.Models.Entity.Persona;
 import com.example.tvu_sistema.Models.Entity.Profesion;
-import com.example.tvu_sistema.Models.Entity.Tiene;
 import com.example.tvu_sistema.Models.Entity.Usuario;
 import com.example.tvu_sistema.Models.IService.IGeneroService;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
 import com.example.tvu_sistema.Models.IService.IProfesionService;
-import com.example.tvu_sistema.Models.IService.ITieneService;
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
 
 @Controller
@@ -28,8 +26,7 @@ public class personaPost {
 	private IPersonaService personaService;
     @Autowired
 	private IProfesionService profesionService;
-    @Autowired
-	private ITieneService tieneService;
+
     @Autowired
 	private IUsuarioService usuarioService;
 

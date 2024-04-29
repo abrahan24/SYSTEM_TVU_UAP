@@ -36,7 +36,7 @@ import com.example.tvu_sistema.Models.IService.IPersonaService;
 import com.example.tvu_sistema.Models.IService.IProfesionService;
 import com.example.tvu_sistema.Models.IService.IProgramaService;
 import com.example.tvu_sistema.Models.IService.IReportajeService;
-import com.example.tvu_sistema.Models.IService.ITieneService;
+
 import com.example.tvu_sistema.Models.IService.IUsuarioService;
 import com.example.tvu_sistema.Models.Otros.Encryptar;
 import com.example.tvu_sistema.Models.Repository.ProgramaR.ProgramaRepository;

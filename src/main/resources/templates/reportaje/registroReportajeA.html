@@ -124,7 +124,7 @@
   
       // Verificar si el enlace es de YouTube
       if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
-        embedUrl = videoUrl.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+        embedUrl = videoUrl .replace("https://youtu.be/", "https://www.youtube.com/embed/");
       }
       // Verificar si el enlace es de Facebook
       else if (videoUrl.includes("facebook.com")) {
@@ -138,7 +138,9 @@
         alert("Enlace de video no válido");
         return;
       }
-  
+      
+
+     
       // Establecer el src del iframe con la URL modificada y mostrar el modal
       $('#videoFrame').attr('src', embedUrl);
       $('#videoModal').modal('show');

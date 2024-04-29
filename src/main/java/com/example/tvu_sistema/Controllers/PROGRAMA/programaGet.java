@@ -28,7 +28,7 @@ import com.example.tvu_sistema.Models.IService.IDias_transmisionService;
 import com.example.tvu_sistema.Models.IService.IHorarioService;
 import com.example.tvu_sistema.Models.IService.IPersonaService;
 import com.example.tvu_sistema.Models.IService.IProgramaService;
-import com.example.tvu_sistema.Models.IService.ITransmiteService;
+
 import com.example.tvu_sistema.Models.Otros.Encryptar;
 import com.example.tvu_sistema.Models.Repository.ProgramaR.ProgramaRepository;
 
@@ -44,8 +44,7 @@ public class programaGet {
     private IDias_transmisionService dias_transmisionService;
     @Autowired
     private IProgramaService programaService;
-    @Autowired
-    private ITransmiteService transmiteService;
+ 
     @Autowired
     private ProgramaRepository programaRepository;
     
@@ -62,7 +61,7 @@ public class programaGet {
             model.addAttribute("horarios", horarioService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
-            model.addAttribute("transmite", transmiteService.findAll());
+      
             model.addAttribute("ano_actual", programaRepository.anoActual());
                         
             return "programa/registroProgramaA";
@@ -82,7 +81,7 @@ public class programaGet {
         model.addAttribute("horarios", horarioService.findAll());
         model.addAttribute("personas", personaService.findAll());
         model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
-        model.addAttribute("transmite", transmiteService.findAll());
+
         
         return "programa/tablePrograma";
     }
@@ -93,7 +92,7 @@ public class programaGet {
         model.addAttribute("horarios", horarioService.findAll());
         model.addAttribute("personas", personaService.findAll());
         model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
-        model.addAttribute("transmite", transmiteService.findAll());
+
         return "programa/formPrograma";
     }
 
@@ -123,7 +122,7 @@ public class programaGet {
             model.addAttribute("horarios", horarioService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("dias_transmisiones", dias_transmisionService.findAll());
-            model.addAttribute("transmite", transmiteService.findAll());
+
             model.addAttribute("ano_actual", programaRepository.anoActual());
 
             return "programa/formPrograma";
