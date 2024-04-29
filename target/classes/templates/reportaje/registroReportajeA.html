@@ -122,9 +122,13 @@
     function openVideoModal(videoUrl) {
       var embedUrl;
   
-      // Verificar si el enlace es de YouTube
-      if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
-        embedUrl = videoUrl.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+     // Verificar si el enlace es de YouTube
+     if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+        // embedUrl = videoUrl.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+        var videoID = getYouTubeVideoId(videoUrl);
+        if (videoID) {
+          embedUrl = "https://www.youtube.com/embed/"+videoID;
+        }
       }
       // Verificar si el enlace es de Facebook
       else if (videoUrl.includes("facebook.com")) {
@@ -138,14 +142,21 @@
         alert("Enlace de video no válido");
         return;
       }
-      
-
-     
+  
       // Establecer el src del iframe con la URL modificada y mostrar el modal
       $('#videoFrame').attr('src', embedUrl);
       $('#videoModal').modal('show');
     }
-  
+    function getYouTubeVideoId(url) {
+        var videoId;
+        // Patrón para buscar el ID del video de YouTube
+        var pattern = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        var match = url.match(pattern);
+        if (match && match[1]) {
+          videoId = match[1];
+        }
+        return videoId;
+      }
     // Función para obtener parámetros de la URL
     function getParameterByName(name, url) {
       name = name.replace(/[\[\]]/g, "\\$&");
