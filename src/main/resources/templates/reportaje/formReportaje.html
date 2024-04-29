@@ -148,6 +148,8 @@
                         <div class="controls">
                           <select style="width: 100%;" th:field="${reportaje.persona}" required
                             class="selectB_2 form-control">
+                            <option value="" selected >Seleccione...</option>
+
                             <th:block th:each="p : ${personas}" th:if="${p.estado_persona == 'A'}">
                               <option th:value="${p.id_persona}"
                                 th:text="${p.nombre+' '+p.ap_paterno+' '+p.ap_materno}"></option>
