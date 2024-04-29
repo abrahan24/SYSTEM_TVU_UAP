@@ -62,6 +62,7 @@
                                         <label>Edad</label>
                                         <div class="controls">
                                             <input th:field="${persona.edad}" type="number" name="text"
+                                                min="1"
                                                 class="form-control" required
                                                 data-validation-required-message="Necesita ingresar los datos">
                                         </div>
@@ -121,19 +122,19 @@
                                         <label>Profesiones</label>
                                         <button th:if="${persona.id_persona != null}" type="button"
                                             class="badge badge-pill badge-dark" data-toggle="popover"
+                                            id="myButton"
                                             data-content="<b>El selector de Profesiones esta desabilitado</b>"
                                             data-original-title="Ayuda" data-html="true" data-trigger="focus">
                                             ❔
                                         </button>
-                                        <button th:if="${persona.id_persona == null}" type="button"
+                                        <!-- <button th:if="${persona.id_persona == null}" type="button"
                                             class="badge badge-pill badge-dark" data-toggle="popover"
+                                            id="myButton"
                                             data-content="<b> Despues de Registrar no se podra Editar</b>"
                                             data-original-title="Ayuda" data-html="true" data-trigger="focus">
                                             ❔
-                                        </button>
-                                        <button type="button" class="btn btn-info" data-toggle="popover" data-content="Tart macaroon marzipan I love soufflé apple pie wafer. Chocolate bar jelly caramels jujubes chocolate cake gummies." data-trigger="hover" data-original-title="Hover Triggered">
-                                            On Hover Trigger
-                                          </button>
+                                        </button> -->
+                                       
                                         <div class="controls">
 
                                             <select th:if="${persona.id_persona != null}" th:field="${persona.profesion}"
@@ -191,6 +192,17 @@
     $(document).ready(function () {
         $('.selectB').select2();
         $('.selectB2').select2();
+        $('#myButton').click(function () {
+                // Obtiene el contenido del atributo data-content del botón
+                var content = $(this).data('content');
+                
+                // Despliega la alerta con el contenido obtenido
+                Swal.fire({
+                    title: "Ayuda",
+                    html: content,
+                    icon: "info"
+                });
+            });
         $('#form1').submit(function (event) {
             event.preventDefault();
 
