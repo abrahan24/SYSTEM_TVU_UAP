@@ -19,7 +19,7 @@
         <div class="content-wrapper">
           <div class="container-fluid"><!-- Basic form layout section start -->
             <div id="FormularioReportaje">
-              
+
             </div>
             <!-- ========= -->
             <!-- TABLA -->
@@ -31,14 +31,15 @@
                     <div class="card-header">
                       <div class="card-title-wrap bar-success">
                         <h4 class="card-title" id="basic-layout-form">Lista de Registros</h4>
+                      
                       </div>
                     </div>
 
                     <div class="card-body">
                       <div class="px-3" id="fragmentContainer">
-                        
+
                         <div id="TablaReportaje"></div>
-                        
+
                       </div>
                     </div>
 
@@ -49,7 +50,8 @@
             <!-- ========= -->
             <!-- MODAL Descripcion-->
             <!-- ========= -->
-            <div class="modal fade text-left" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal fade text-left" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+              aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content" id="modalContent">
                 </div>
@@ -58,14 +60,53 @@
             <!-- ========= -->
             <!-- MODAL2 Entrevistados -->
             <!-- ========= -->
-            <div class="modal fade text-left" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+            <div class="modal fade text-left" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+              aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content" id="modalContent2">
                 </div>
               </div>
             </div>
 
+            <!-- <div class="modal fade text-left" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      
+                      <div class="modal-body">
+                          <iframe id="videoFrame" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+          <div class="modal fade text-left" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document"> <!-- Agregamos la clase "modal-lg" para hacer la ventana modal más grande -->
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #FF4961;">
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" style="background-color: #003566;">
+                  <div class="embed-responsive embed-responsive-16by9"> <!-- Agregamos una clase para hacer el iframe responsive y panorámico -->
+                    <iframe id="videoFrame" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe> <!-- Añadimos la clase "embed-responsive-item" para hacer el iframe responsive -->
+                  </div>
+                  <div class="modal-footer">
+                    <button style="width: 100%;" type="button" class="btn btn-danger" data-bs-dismiss="modal"><b>Cerrar</b></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
 
+         
+            
+           
+         
+      
+      
+        
+           
 
           </div>
         </div>
@@ -77,115 +118,150 @@
   </div>
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
+  <script>
+    function openVideoModal(videoUrl) {
+      var embedUrl;
   
+      // Verificar si el enlace es de YouTube
+      if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+        embedUrl = videoUrl.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+      }
+      // Verificar si el enlace es de Facebook
+      else if (videoUrl.includes("facebook.com")) {
+        // Modificar la URL de Facebook para que sea compatible con la incrustación en un iframe
+        // Convertir el enlace de Facebook a un enlace de video compatible con un iframe
+        var videoId = getParameterByName("v", videoUrl); // Obtener el ID del video de la URL
+        embedUrl = "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(videoUrl); // Construir la URL del video compatible con el iframe
+      }
+      // Si no es un enlace válido, mostrar un mensaje de error
+      else {
+        alert("Enlace de video no válido");
+        return;
+      }
+  
+      // Establecer el src del iframe con la URL modificada y mostrar el modal
+      $('#videoFrame').attr('src', embedUrl);
+      $('#videoModal').modal('show');
+    }
+  
+    // Función para obtener parámetros de la URL
+    function getParameterByName(name, url) {
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+  </script>
   <div th:replace="layout/layoutMain :: scrip1"></div>
 
   <script>
- 
+    
     function MandarId(param) {
-      
+
       $.ajax({
-          url: '/admin/modalReportaje/'+param,
-          type: 'GET',
-          success: function(data) {
-              $("#modalContent").html(data);
-              $("#myModal").modal('show');
-          }
+        url: '/admin/modalReportaje/' + param,
+        type: 'GET',
+        success: function (data) {
+          $("#modalContent").html(data);
+          $("#myModal").modal('show');
+        }
       });
-      
+
     };
     function MandarId2(param) {
-      
+
       $.ajax({
-          url: '/admin/modalReportaje2/'+param,
-          type: 'GET',
-          success: function(data) {
-              $("#modalContent2").html(data);
-              $("#myModal2").modal('show');
-          }
+        url: '/admin/modalReportaje2/' + param,
+        type: 'GET',
+        success: function (data) {
+          $("#modalContent2").html(data);
+          $("#myModal2").modal('show');
+        }
       });
-      
+
     };
   </script>
-    <script th:inline="javascript">
-    
-      cargarTabla();
-      cargarFormulario();
-  
-      function cargarTabla() {
-        $.ajax({
-          type: 'POST',
-          url: "/admin/tableReportaje",  // Ruta del metodo del controlador en Spring Boot
-          success: function (response) {
-            $("#TablaReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-          }
-        });
-      }
-  
-      function cargarFormulario() {
+  <script th:inline="javascript">
+
+    cargarTabla();
+    cargarFormulario();
+
+    function cargarTabla() {
+      $.ajax({
+        type: 'POST',
+        url: "/admin/tableReportaje",  // Ruta del metodo del controlador en Spring Boot
+        success: function (response) {
+          $("#TablaReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+        }
+      });
+    }
+
+    function cargarFormulario() {
+      $.ajax({
+        type: 'POST',
+        url: "/admin/NuevoReportaje",  // Ruta del metodo del controlador en Spring Boot
+        success: function (response) {
+
+          $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+        }
+      });
+    }
+
+
+    function cargarModFormulario(id) {
+      //alert("AAAAAAAAAAAAAAAAAAA");
+      $.ajax({
+        url: '/admin/editar-reportaje/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+        method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+        // Envía el parámetro "id" al servidor
+        success: function (response) {
+
+          $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+
+          toastr.info('¿Modificar Registro?');
+        },
+        error: function (xhr, status, error) {
+          // Maneja los errores de la solicitud AJAX
+          console.log(error);
+        }
+      });
+    }
+
+    function EliminarRegistro(id, nombre) {
+      Swal.fire({
+        title: "Atencion!",
+        text: "¿Estas seguro que desea eliminar el registro: " + nombre + "?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SI, Eliminar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario hace clic en "Sí, eliminar"
           $.ajax({
             type: 'POST',
-            url: "/admin/NuevoReportaje",  // Ruta del metodo del controlador en Spring Boot
+            url: "/admin/eliminar-reportaje/" + id,
             success: function (response) {
-  
-              $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
+              cargarTabla();
+              Swal.fire(
+                'Eliminado!',
+                'El registro se ha eliminado con éxito.',
+                'success'
+              );
+            },
+            error: function (xhr, status, error) {
+              console.log(error);
             }
           });
         }
-  
-  
-      function cargarModFormulario(id) {
-                //alert("AAAAAAAAAAAAAAAAAAA");
-                $.ajax({
-                  url: '/admin/editar-reportaje/' + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
-                  method: 'GET', // Utiliza el método HTTP que corresponda (GET, POST, etc.)
-                  // Envía el parámetro "id" al servidor
-                  success: function (response) {
-  
-                    $("#FormularioReportaje").html(response);  // Actualiza el contenido del div con la respuesta del servidor
-                    
-                    toastr.info('¿Modificar Registro?');
-                  },
-                  error: function (xhr, status, error) {
-                    // Maneja los errores de la solicitud AJAX
-                    console.log(error);
-                  }
-                });
-              }
-  
-              function EliminarRegistro(id, nombre) {
-          Swal.fire({
-            title: "Atencion!",
-            text: "¿Estas seguro que desea eliminar el registro: " + nombre + "?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "SI, Eliminar",
-            cancelButtonText: "Cancelar"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Si el usuario hace clic en "Sí, eliminar"
-              $.ajax({
-                type: 'POST',
-                url: "/admin/eliminar-reportaje/" + id,
-                success: function (response) {
-                  cargarTabla();
-                  Swal.fire(
-                    'Eliminado!',
-                    'El registro se ha eliminado con éxito.',
-                    'success'
-                  );
-                },
-                error: function (xhr, status, error) {
-                  console.log(error);
-                }
-              });
-            }
-          });
-        }
-  
-    </script>
+      });
+    }
+
+  </script>
 </body>
 
 </html>

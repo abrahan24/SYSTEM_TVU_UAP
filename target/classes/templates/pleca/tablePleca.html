@@ -35,10 +35,7 @@
       <td th:text="${plec.titulo_transmicion_pleca}"></td>
 
       <td>
-        <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" target="_blank"
-          th:href="${plec.url_video_pleca}">
-          <b>Ver</b>
-        </a>
+        <button class="btn btn-secondary btn-round mb-0" style="width: 100%;" th:attr="onclick='openVideoModal(\'' + ${plec.url_video_pleca} + '\')'">Abrir video</button>
       </td>
 
       <td>

@@ -37,9 +37,12 @@
             <td th:text="${repor.lugar_reportaje}" ></td>
             <td th:text = "${#dates.format(repor.f_reportaje, 'dd/MM/yyyy')}" ></td>
             <td>
-              <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" target="_blank" th:href="${repor.url_video_reportaje}">
+               <!-- <a class="btn btn-secondary btn-round mb-0" style="width: 100%;" 
+               th:attr="onclick=${'openVideoModal('+repor.url_video_reportaje+')'}">
                 <b>Ver</b>
-              </a>
+              </a>  -->
+              <button class="btn btn-secondary btn-round mb-0" style="width: 100%;" th:attr="onclick='openVideoModal(\'' + ${repor.url_video_reportaje} + '\')'">Abrir video</button>
+
             </td>
 
             <td>
