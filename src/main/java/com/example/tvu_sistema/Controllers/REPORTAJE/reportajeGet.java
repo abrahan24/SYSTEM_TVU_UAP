@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,13 +67,14 @@ public class reportajeGet {
         if (request.getSession().getAttribute("persona") != null) {
 
             List<Reportaje> reportajes = reportajeService.findAll();
-
+           
             model.addAttribute("reportajes", reportajes);
 
             model.addAttribute("programas", programaService.findAll());
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("categoria_reportajes", categoria_reportajeService.findAll());
-            model.addAttribute("ano_actual", programaRepository.anoActual());
+            // model.addAttribute("ano_act",  year.toString());    
+           
 
             return "reportaje/registroReportajeA";
         } else {

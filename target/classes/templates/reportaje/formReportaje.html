@@ -76,9 +76,9 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label>Del Programa:</label>
+                        <label >Del Programa:</label>
                         <button type="button" id="myButton1" class="badge badge-pill badge-dark" data-toggle="popover"
-                          th:data-content="${'<b> Los Programas que se muestran son de la Gestión actual ' + ano_actual +'</b>'}"
+                          th:data-content="${'<b> Los Programas que se muestran son de la Gestión actual </b>'}"
                           data-original-title="Ayuda" data-html="true" data-trigger="focus">
                           ❔
                         </button>
@@ -208,6 +208,7 @@
 <script>
   $(document).ready(function () {
     $('.selectB').select2();
+    $('.selectB_3').select2();
     $('.selectB_2').select2();
     $('.selectM').select2();
     $('#myButton').click(function () {
@@ -224,11 +225,13 @@
             $('#myButton1').click(function () {
                 // Obtiene el contenido del atributo data-content del botón
                 var content = $(this).data('content');
-                
+                var fecha_actual = new Date();
+                var ano_actual = fecha_actual.getFullYear();
+                var contenido = content + "<b>"+ano_actual.toString()+"</b>";
                 // Despliega la alerta con el contenido obtenido
                 Swal.fire({
                     title: "Ayuda",
-                    html: content,
+                    html: contenido,
                     icon: "info"
                 });
             });
