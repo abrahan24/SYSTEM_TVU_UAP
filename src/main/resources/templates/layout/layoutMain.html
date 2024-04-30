@@ -185,15 +185,16 @@
         </div>
     </nav>
 
-    <footer class="footer footer-static footer-light" th:fragment="footer">
+    <footer th:fragment="footer" class="footer footer-static footer-light">
         <p class="clearfix text-muted text-center px-2">
-            <span>Copyright &copy; 2024 
-                <a
-                    href="https://www.facebook.com/TVUCanal21" id="pixinventLink"
-                    target="_blank" class="text-bold-800 info darken-2">TVU 
-                </a>, Todos los derechos reservados.
+            <span>Copyright &copy; 
+                <span id="year"></span> 
+                <a href="https://www.facebook.com/TVUCanal21" id="pixinventLink" target="_blank" class="text-bold-800 info darken-2">TVU</a>, Todos los derechos reservados.
             </span>
         </p>
+        <script>
+            document.getElementById('year').textContent = new Date().getFullYear();
+        </script>
     </footer>
 
     <div th:fragment="scrip1">
