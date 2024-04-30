@@ -26,8 +26,8 @@
                                 <div class="col-lg-4 col-md-12">
                                     <label>Persona</label>
                                     <div class="controls">
-                                      <select style="width: 100%;" th:field="${usuario.persona}" id="select2" required
-                                        class="selectB_2 form-control">
+                                      <select style="width: 100%;" th:field="${usuario.persona}" id="selectA" required
+                                        class="selectAA form-control">
                                         <option value="" selected >Seleccione...</option>
                                         <th:block th:each="pr : ${personas}" th:if="${pr.estado_persona != 'X'}">
                                           <option th:value="${pr.id_persona}" th:text="${pr.nombre+' '+pr.ap_paterno+' '+pr.ap_materno}">
@@ -61,8 +61,8 @@
                                     <div class="form-group">
                                         <label>Rol del Usuario</label>
                                         <div class="controls">
-                                            <select style="width: 100%;" th:field="${usuario.est_usuario}" id="select2" required
-                                            class="selectB_2 form-control">
+                                            <select style="width: 100%;" th:field="${usuario.est_usuario}" id="selectB" required
+                                            class="selectB form-control">
                                             <option value="" selected >Seleccione...</option>
                                             <option value="A"  >Habilitado</option>
                                             <option value="P"  >Deshabilitado</option>
@@ -106,8 +106,8 @@
 
 <script>
     $(document).ready(function () {
-        $('.selectB').select2();
-        $('.selectB2').select2();
+        $('#selectA').select2();
+        $('#selectB').select2();
         $('#myButton').click(function () {
                 // Obtiene el contenido del atributo data-content del botón
                 var content = $(this).data('content');
