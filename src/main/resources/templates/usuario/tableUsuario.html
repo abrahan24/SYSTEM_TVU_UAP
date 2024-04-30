@@ -1,5 +1,5 @@
 <table
-  class="table display nowrap table-striped table-bordered scroll-horizontal table-hover"
+  class="table display nowrap table-striped table-bordered scroll-horizontal-vertical table-hover"
 >
   <thead id="table_body">
     <tr>
@@ -42,7 +42,9 @@
 
 </table>
 <script>
-  $(".scroll-horizontal").DataTable({
-        
-        });
+  $(".scroll-horizontal-vertical").DataTable({
+      "scrollY": 350,
+      "scrollX": false
+    });
 </script>
+
