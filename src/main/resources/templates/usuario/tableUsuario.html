@@ -1,0 +1,48 @@
+<table
+  class="table display nowrap table-striped table-bordered scroll-horizontal table-hover"
+>
+  <thead id="table_body">
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Persona</th>
+      <th scope="col">Usuario</th>
+      <th scope="col">Contraseña</th>
+      <th scope="col">Estado</th>
+      <th scope="col" class="text-center"><i class="fa fa-cog"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="usu, index : ${usuarios}" th:if="${usu.est_usuario != 'X' && usu.est_usuario != 'S'}">
+      <td scope="row">
+        <b th:text="${index.index + 1}"></b>
+      </td>
+      <td th:text="${usu.persona.nombre+' '+usu.persona.ap_paterno+' '+usu.persona.ap_materno}"></td>
+      <td th:text="${usu.nom_usuario}"></td>
+      <td th:text="${usu.contrasena}"></td>
+      <td th:text="${usu.est_usuario}"></td>
+      <td>
+        <div class="btn-group btn-group-justified btn-round">
+          <a
+            style="width: 100%"
+            href="#FormularioUsuario"
+            th:attr="onclick='cargarModFormulario(\'' + ${usu.id_usuario} + '\')'"
+            class="btn btn-blue btn-round mb-0"
+            >⚙️</a
+          >
+          <a
+            style="width: 100%"
+            th:attr="onclick='EliminarRegistro(\'' + ${usu.id_usuario} + '\' , \'' + ${usu.nom_usuario} + '\')'"
+            class="btn btn-danger btn-round mb-0"
+            >🗑️</a
+          >
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
+<script>
+  $(".scroll-horizontal").DataTable({
+        
+        });
+</script>

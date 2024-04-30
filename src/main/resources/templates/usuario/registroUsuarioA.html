@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace="layout/layoutMain :: head"></head>
+
+  <body style="background-color: #dee2e6">
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="wrapper">
+      <div th:replace="layout/layoutMain :: menuLateral"></div>
+      <div th:replace="layout/layoutMain :: menuCabezera"></div>
+
+      <div class="main-panel">
+        <div class="main-content">
+          <div class="content-wrapper">
+            <div class="container-fluid">
+              <!-- Basic form layout section start -->
+              <div id="FormularioUsuario">
+                
+              </div>
+              <!-- ========= -->
+              <!-- TABLA -->
+              <!-- ========= -->
+              <section id="basic-form-layouts">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card box-shadow-3">
+                      <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                          <h4 class="card-title" id="basic-layout-form">
+                            Lista de Registros
+                          </h4>
+                        </div>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="px-3" id="fragmentContainer">
+                          <div id="TablaUsuario"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- // Basic form layout section end -->
+            </div>
+          </div>
+        </div>
+
+        <div th:replace="layout/layoutMain :: footer"></div>
+      </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+    <div th:replace="layout/layoutMain :: scrip1"></div>
+    <!-- <div th:replace="layout/mensajes :: submit_form"></div> -->
+
+    <script th:inline="javascript">
+      cargarFormulario();
+      cargarTabla();
+
+      function cargarTabla() {
+        $.ajax({
+          type: "POST",
+          url: "/admin/tableUsuario", // Ruta del metodo del controlador en Spring Boot
+          success: function (response) {
+            $("#TablaUsuario").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          },
+        });
+      }
+
+      function cargarFormulario() {
+        $.ajax({
+          type: "POST",
+          url: "/admin/NuevaUsuario", // Ruta del metodo del controlador en Spring Boot
+          success: function (response) {
+            $("#FormularioUsuario").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          },
+        });
+      }
+
+      function cargarModFormulario(id) {
+      //alert("AAAAAAAAAAAAAAAAAAA");
+      $.ajax({
+        url: "/admin/editar-usuario/" + id, // Reemplaza '/ruta_del_servidor' por la URL de tu servidor
+        method: "GET", // Utiliza el método HTTP que corresponda (GET, POST, etc.)
+        // Envía el parámetro "id" al servidor
+        success: function (response) {
+          $("#FormularioUsuario").html(response); // Actualiza el contenido del div con la respuesta del servidor
+          
+        },
+        error: function (xhr, status, error) {
+          // Maneja los errores de la solicitud AJAX
+          console.log(error);
+        },
+      });
+    }
+
+    function EliminarRegistro(id, nombre) {
+        Swal.fire({
+          title: "Atencion!",
+          text: "¿Estas seguro que desea eliminar el registro: " + nombre + "?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "SI, Eliminar",
+          cancelButtonText: "Cancelar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Si el usuario hace clic en "Sí, eliminar"
+            $.ajax({
+              type: 'POST',
+              url: "/admin/eliminar-usuario/" + id,
+              success: function (response) {
+                cargarTabla();
+                Swal.fire(
+                  'Eliminado!',
+                  'El registro se ha eliminado con éxito.',
+                  'success'
+                );
+              },
+              error: function (xhr, status, error) {
+                console.log(error);
+              }
+            });
+          }
+        });
+      }
+
+    </script>
+  </body>
+</html>

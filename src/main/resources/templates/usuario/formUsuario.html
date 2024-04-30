@@ -1,0 +1,190 @@
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-shadow-3">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 th:if="${usuario.id_usuario == null}" class="card-title" id="basic-layout-form">
+                            Nuevo Registro - Usuario
+                        </h4>
+                        <h4 th:if="${usuario.id_usuario != null}" class="card-title" id="basic-layout-form">
+                            Actualizar Registro - Usuario
+                        </h4>
+                    </div>
+                    <p class="mb-0">
+                        El registro corresponde a las credenciales y rol del usuario
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="px-3">
+                        <form class="form" id="form1" action="/admin/RegistroUsuarioF" method="post" novalidate>
+                            <input type="hidden" th:field="${usuario.id_usuario}">
+                            <h4 class="form-section">
+                                <i class="icon-user"></i> Persona
+                            </h4>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12">
+                                    <label>Persona</label>
+                                    <div class="controls">
+                                      <select style="width: 100%;" th:field="${usuario.persona}" id="select2" required
+                                        class="selectB_2 form-control">
+                                        <option value="" selected >Seleccione...</option>
+                                        <th:block th:each="pr : ${personas}" th:if="${pr.estado_persona != 'X'}">
+                                          <option th:value="${pr.id_persona}" th:text="${pr.nombre+' '+pr.ap_paterno+' '+pr.ap_materno}">
+                                          </option>
+                                        </th:block>
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Nombre de Usuario</label>
+                                        <div class="controls">
+                                            <input th:field="${usuario.nom_usuario}" type="text" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Contraseña</label>
+                                        <div class="controls">
+                                            <input th:field="${usuario.contrasena}" type="text" name="text"
+                                                class="form-control" required
+                                                data-validation-required-message="Necesita ingresar los datos">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="form-group">
+                                        <label>Rol del Usuario</label>
+                                        <div class="controls">
+                                            <select style="width: 100%;" th:field="${usuario.est_usuario}" id="select2" required
+                                            class="selectB_2 form-control">
+                                            <option value="" selected >Seleccione...</option>
+                                            <option value="A"  >Habilitado</option>
+                                            <option value="P"  >Deshabilitado</option>
+                                          
+                                          </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                      
+                            <div class="row">
+                                <div class="col-lg-10 col-md-12">
+                                    <button th:if="${usuario.id_usuario == null}" style="width: 100%;" type="submit"
+                                        class="btn btn-success py-2">
+                                        <b>GUARDAR</b>
+                                    </button>
+                                    <button th:if="${usuario.id_usuario != null}" style="width: 100%;" type="submit"
+                                        class="btn btn-info py-2">
+                                        <b>ACTUALIZAR INFORMACIÓN</b>
+                                    </button>
+                                </div>
+                                <div class="col-lg-2 col-md-12">
+                                    <a th:if="${usuario.id_usuario == null}" style="width: 100%;" href="#table_body"
+                                        class="btn btn-warning py-2">
+                                        <b>Ver Lista</b>
+                                    </a>
+                                    <a th:if="${usuario.id_usuario != null}" href="/admin/RegistroUsuarioV"
+                                        style="width: 100%;" type="submit" class="btn btn-danger py-2">
+                                        <b>CANCELAR</b>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('.selectB').select2();
+        $('.selectB2').select2();
+        $('#myButton').click(function () {
+                // Obtiene el contenido del atributo data-content del botón
+                var content = $(this).data('content');
+                
+                // Despliega la alerta con el contenido obtenido
+                Swal.fire({
+                    title: "Ayuda",
+                    html: content,
+                    icon: "info"
+                });
+            });
+        $('#form1').submit(function (event) {
+            event.preventDefault();
+
+            var form = document.getElementById("form1");
+            var action = form.action;
+
+            // Validar que los campos no ocultos no estén vacíos
+            var camposNoOcultos = $(this).find('input[type!="hidden"], select');
+            var camposVacios = camposNoOcultos.filter(function () {
+                return !$(this).val();
+            });
+
+            if (camposVacios.length > 0) {
+                // Mostrar un mensaje de error si hay campos vacíos
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Por favor, complete todos los campos obligatorios.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    var mensaje = response;
+                    if (mensaje == "Registrar") {
+                        Swal.fire({
+                            title: 'Registro Exitoso!',
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } if (mensaje == "existe") {
+                        Swal.fire({
+                            title: 'Error, Ya existe una persona con ese C.I.!',
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Actualización Exitosa!',
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                    cargarFormulario();
+                    cargarTabla();
+
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Ha ocurrido un error. Por favor, intenta nuevamente.' + xhr, status, error);
+                    console.error(error);
+                    // Manejo de errores
+                }
+            });
+
+        });
+    });
+</script>
+
