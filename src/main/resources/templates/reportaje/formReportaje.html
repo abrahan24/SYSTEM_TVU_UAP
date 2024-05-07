@@ -28,7 +28,18 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label>Tema del Reportaje</label>
+                        <label>Titulo del Reportaje</label>
+                        <div class="controls">
+                          <input th:field="${reportaje.titulo_reportaje}" type="text" name="text" class="form-control"
+                            required data-validation-required-message="Necesita ingresar los datos">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label>Pleca del Reportaje</label>
                         <div class="controls">
                           <input th:field="${reportaje.tema_reportaje}" type="text" name="text" class="form-control"
                             required data-validation-required-message="Necesita ingresar los datos">

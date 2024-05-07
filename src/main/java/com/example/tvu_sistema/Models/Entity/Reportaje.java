@@ -32,6 +32,8 @@ public class Reportaje implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id_reportaje;
+    private String titulo_reportaje;    
+    @Column(length = 10485760)
     private String tema_reportaje;    
     @Column(length = 10485760)
     private String desc_reportaje;
